@@ -1,0 +1,98 @@
+<html>
+    <head>
+    </head>
+    <body>   
+    <div class="static-page">
+        <div class="welcome-container">
+            <div class="row">
+            <h2 class="mt-4">Welcome to <span style="color:black ;">Tech</span> <span style="color: chocolate;">Sparrow!</span></h2>
+            </div>
+        
+            <div class="container my-5">
+                <div class="row justify-content-around">
+                <!-- Left speech bubble -->
+                    <div class="col-md-5">
+                        <div class="speech-bubble orange bg-light">
+                            <h4>Find the best answer to your technical question, help others, be part of the global coummunity</h4>
+                            <a href="<?php echo site_url('User/register'); ?>" class="btn btn-warning mt-3 ">Join the community</a>
+                        </div>
+                    </div>
+        
+                <!-- Right speech bubble -->
+                <div class="col-md-5">
+                    <div class="speech-bubble blue bg-light">
+                        <h4>Already part of the global technical knowledge community?</h4>
+                        <a href="#login" class="btn btn-warning mt-3">Login</a>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="about mt-3">
+                <h2 class="text-center mb-4">Tech <span style="color:chocolate ;">Sparrow </span> Global</h2>
+                <p class="text-center">Tech Sparrow is a global community of tech enthusiasts and professionals dedicated to pushing the boundaries of technology. 
+                We are a platform where you can find the best answers to your technical questions, help others, and be part of a global community of tech professionals solving real-world problems and creating a brighter future. 
+                Our mission is to help you connect with other tech professionals, share your knowledge, and learn from others. 
+                Join us and be part of the global technical knowledge community!</p>
+            </div>
+            
+            <div class="row testimonial-container mt-4">
+            <div class="col-12">
+                <h2 class="text-center mb-4">Customer Testimonials</h2>
+                <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <!-- Indicators/dots -->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    
+                    <!-- The slideshow/carousel -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <img src="<?php echo base_url('images/keegan.jpg'); ?>"class="d-block w-100" alt="Customer 1">
+                                </div>
+                                <div class="col-md-8">
+                                    <p class="testimonial-text">"Sed ut perspiciatis unde omnis iste natus error sit 
+                                        voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab 
+                                        illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."</p>
+                                    <em>- Maya Stern, CTO Burkett Technologies -</em>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                    <img src="<?php echo base_url('images/daisy.jpg'); ?>"class="d-block w-100" alt="Customer 2">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="testimonial-text">"Sed ut perspiciatis unde omnis iste natus error sit 
+                                            voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab 
+                                            illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."</p>
+                                        <em>- Daisy Jones, Actress -</em>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                <img src="<?php echo base_url('images/reacher.jpg'); ?>"class="d-block w-100" alt="Customer 3">
+                                </div>
+                                <div class="col-md-8">
+                                    <p class="testimonial-text">"Sed ut perspiciatis unde omnis iste natus error sit 
+                                        voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab 
+                                        illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."</p>
+                                    <em> - Reacher, Actor - </em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>  
+</body>   
+</html>
