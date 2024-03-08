@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <div class="question-content">
+        <div class="question">
+            <h3><a href="#questions/<%= id %>"><%= title %></a></h3>
+            <p><%= body %></p>
+    <div class="question-meta d-flex justify-content-between">
+        <span><%= answer_count %> answers</span>
+        <span class="text-muted">Asked by: <%= username %></span>
+    </div>
+    <div class="question-tags">
+        <% _.each(tags, function(tag) { %>
+            <span class="tag-label"><%= tag %></span>
+        <% }); %>
+    </div>
+    </div>
+    </html>
+</html>

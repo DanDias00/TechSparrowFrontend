@@ -53,7 +53,6 @@ var LoginView = Backbone.View.extend({
         // Here, send the login request to the backend
         console.log('Attempting to log in with:', this.user.get('username'), this.user.get('password'));
         
-        // Typically, you'd use the model's save method, but for a login, a custom AJAX call might be more appropriate
         $.ajax({
             url: 'http://localhost/TechSparrow/index.php/login', // Replace with your actual endpoint
             type: 'POST',
@@ -62,11 +61,10 @@ var LoginView = Backbone.View.extend({
                 console.log('Login successful:', response);
                 Backbone.history.navigate('questions', { trigger: true });
                
-
             },
             error: function(error) {
                 console.error('Login failed:', error);
-                // Handle login failure here
+               
             }
         });
     }

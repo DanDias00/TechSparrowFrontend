@@ -1,0 +1,42 @@
+body {
+    font-family: "Poppins", sans-serif !important;
+    font-weight:400 !important;
+    background-color: antiquewhite !important;
+}
+
+.question{
+    background-color:white;
+    padding:20px;
+    border-radius:20px;
+    margin-top:20px;
+    margin-bottom: 2vw;
+    margin-left: 2vw;
+    border: 1px solid black
+}
+.question-header h1{
+    font-family: "Poppins", sans-serif;
+    font-weight:800;
+}
+.votes{
+    margin-right: 20px;
+    text-align: center;
+}
+.question-content{
+    margin-right: 20px;
+    
+}
+.question-meta{
+    margin-top: 20px;
+
+}
+
+.tag-label{
+    background-color: cornflowerblue;
+    border-radius: 5px;
+ 
+    padding: 5px;
+}
+.question-tags{
+    margin-top: 10px;
+}
+  

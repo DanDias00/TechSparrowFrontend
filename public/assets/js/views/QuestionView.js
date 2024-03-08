@@ -8,9 +8,10 @@ var QuestionView = Backbone.View.extend({
         // Load the template
         $.get('assets/html/Question.html', function(templateData) {
             self.template = _.template(templateData);
-            // Render inside the callback to ensure template is loaded
+
             self.render();
         });
+        
     },
     
     render: function() {

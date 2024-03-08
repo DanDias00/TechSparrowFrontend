@@ -3,18 +3,18 @@ var QuestionsView = Backbone.View.extend({
 
     initialize: function(options) {
         this.collection = options.collection; // Assign the passed collection to this.collection
+        this.questionListView =  new QuestionsCommonView(); // Create a new instance of the common view
 
-        console.log("Questions View initialized. Collection:", this.collection);
-
+    
         // Ensure that the collection is available before attempting to fetch
         if (this.collection) {
             this.listenTo(this.collection, 'sync', this.render);
             this.collection.fetch({
                 success: function (collection, response, options) {
-                    console.log("Successfully fetched questions:", response);
+                    console.log("Successfully fetched questions:");
                 },
                 error: function (collection, response, options) {
-                    console.error("Failed to fetch questions. Response:", response);
+                    console.error("Failed to fetch questions. Response:");
                 }
             });
         } else {
@@ -23,8 +23,12 @@ var QuestionsView = Backbone.View.extend({
     },
 
     render: function () {
-        console.log("Rendering QuestionsView with collection size: ", this.collection.length);
+      
         this.$el.empty(); // Clear the container
+        // Render the common view
+        this.questionListView.render();
+        this.$el.append(this.questionListView.el);
+        // Render each question in the collection
         this.collection.each(function (question) {
             // Create a new element for each question view to render into
             var questionEl = $('<div class="question-content"></div>').appendTo(this.$el);
