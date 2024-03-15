@@ -1,0 +1,62 @@
+
+    <div class="container mt-5">
+        <div class="question">
+            <div class="question-content">
+                <h2><%= question.title %></h2>
+                <p><%= question.body %></p>
+            </div>
+            <div class="question-meta">
+                <span>Asked on <%= question.created_at %></span>
+                <span> - <%= question.answer_count %> Answers</span>
+            </div>
+        </div>
+    
+            <% if (answers && answers.length > 0) { %>
+                <h3>Answers:</h3>
+                <% _.each(answers, function(answer) { %>
+                    <div class="answer mt-3 mb-3">
+                        <div class="answer-body">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <%= answer.body %>
+                                    <div class="text-muted">Answered by: <%= answer.username %></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <% _.each(answer.comments, function(comment) { %>
+                            <div class="comment-card mt-3">
+                                <%= comment.body %>
+                                <div class="d-flex justify-content-end mr-4">
+                                    <p><small>Commented by: <%= comment.username %></small></p>
+                                </div>
+                            </div>
+                        <% }); %>
+                        <!-- Comment submission form for each answer -->
+                                <div class="comment-form">
+                                    <form class="submit-comment-form">
+                                        <input type="hidden" name="answer_id" value="<%= answer.id %>">
+                                        <input type="hidden" name="question_id" value="<%= question.id %>">
+                                        <div class="form-group">
+                                            <textarea name="comment_body" placeholder="Add a comment.." class="form-control mt-2"></textarea>
+                                        </div>
+                                        <button type="button" class="btn btn-primary mb-2 submit-comment">Comment</button>
+                                    </form>
+                                </div>
+                <% }); %>
+            <% } else { %>
+                <p>No answers yet. Be the first to answer!</p>
+                
+            <% } %>  
+            <div class="answer-form mt-4">
+                <h4>Have a solution? Submit Your Answer</h4>
+                <form class="submit-answer-form">
+                    <input type="hidden" name="question_id" value="<%= question.id %>">
+                    <div class="form-group">
+                        <textarea class="form-control" name="body" rows="3" required placeholder="Type your answer here..."></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2 submit-answer">Submit Answer</button>
+                </form>
+            </div>
+    </div>
+

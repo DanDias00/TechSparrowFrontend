@@ -5,7 +5,7 @@ var AppRouter = Backbone.Router.extend({
         'login': 'showLogin',      // #login
         'register': 'showRegister', // #register
         'questions': 'showQuestions', // #questions
-        'questions/:id': 'showQuestion' // #questions/1
+        'questions/:id': 'showQuestionDetail'
     },
 
     showLanding: function() {
@@ -26,12 +26,8 @@ var AppRouter = Backbone.Router.extend({
         
        
     },
-
-    showQuestion: function(id) {
-
-        console.log("Viewing question with ID:", id);
-        //TODO: implement this functionality
-        var detailQuestionView = new detailQuestionView({ questionId: id });
-        detailQuestionView.render();
+    showQuestionDetail: function(id) {
+        new QuestionDetailView({id: id});
     }
+
 });

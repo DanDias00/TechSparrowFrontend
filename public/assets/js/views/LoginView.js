@@ -50,22 +50,40 @@ var LoginView = Backbone.View.extend({
     },
 
     login: function() {
-        // Here, send the login request to the backend
-        console.log('Attempting to log in with:', this.user.get('username'), this.user.get('password'));
+
         
-        $.ajax({
-            url: 'http://localhost/TechSparrow/index.php/login', // Replace with your actual endpoint
+       $.ajax({
+            url: 'http://localhost/TechSparrow/index.php/login', 
             type: 'POST',
             data: this.user.toJSON(),
             success: function(response) {
                 console.log('Login successful:', response);
+
                 Backbone.history.navigate('questions', { trigger: true });
                
             },
-            error: function(error) {
-                console.error('Login failed:', error);
-               
+            error: function(jqXHR, textStatus, errorThrown) {
+            
+                var errorMessage;
+            switch (jqXHR.status) {
+                case 404:
+                    errorMessage = 'URL not found.';
+                    break;
+                case 500:
+                    errorMessage = 'something went wrong.';
+                    break;
+                case 401:
+                    errorMessage = 'Unauthorized access.';
+                    break;
+                default:
+                    errorMessage = 'An error occurred.';
             }
+               // Display error message to the user
+            console.error(errorMessage);
+            }
+            
+        
         });
+       
     }
 });
