@@ -50,3 +50,16 @@ body {
 
 }
   
+.register-auth-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    background-color: antiquewhite;
+}
+.register-auth-inner{
+    background-color: whitesmoke;
+    padding: 40px;
+    border-radius: 10px;
+    width: 35vw !important;
+}

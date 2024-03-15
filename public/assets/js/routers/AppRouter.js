@@ -19,7 +19,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     showRegister: function() {
-        // Registration logic would go here
+       new RegisterView();
         console.log("Registration view would be rendered here.");
     },
 

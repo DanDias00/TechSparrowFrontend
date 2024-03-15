@@ -2,8 +2,9 @@
 var UserModel = Backbone.Model.extend({
     defaults: {
         username: '',
-        password: ''
+        password: '',
+        email: '',
+
     },
 
-    // You can add validation, computed properties, and more here
 });

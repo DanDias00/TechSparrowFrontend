@@ -17,8 +17,13 @@ var LoginView = Backbone.View.extend({
                         <label for="password">Password:</label>
                         <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block" id="loginButton">Log</button>
-                    <!-- Additional links here -->
+                    <button type="submit" class="btn btn-primary btn-block" id="loginButton">Log in</button>
+                    <p class="forgot-password text-right mt-3">
+                        Forgot <a href="#resetPassword">password</a>
+                    </p>
+                    <p class="account">
+                        Don't have an account? <a href="#register">Sign up</a>
+                    </p>
                 </form>
             </div>
         </div>
@@ -80,6 +85,7 @@ var LoginView = Backbone.View.extend({
             }
                // Display error message to the user
             console.error(errorMessage);
+            alert(errorMessage);
             }
             
         
