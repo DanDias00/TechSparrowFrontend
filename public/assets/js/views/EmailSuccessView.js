@@ -10,7 +10,7 @@ var EmailSuccessView = Backbone.View.extend({
                 <div class="email-success-icon">
                     <img src="assets/images/email_2.png" alt="Email Sent">
                 </div>
-                <a href="#" class="btn btn-warning mt-3 ml-2 ">Home</a>
+                <a href="#login" class="btn btn-warning mt-3 ml-2 ">Back to Login</a>
             </div>
         </div>
     `),

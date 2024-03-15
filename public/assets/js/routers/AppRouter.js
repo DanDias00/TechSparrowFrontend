@@ -11,6 +11,7 @@ var AppRouter = Backbone.Router.extend({
         'reset_password/:id': 'showResetPassword', // #reset_password
         'email_success': 'showEmailSuccess', // #email_sucess
         'success': 'showSuccess', // #success
+        '*path': 'showNotFound' // Catch-all for 404 Not Found pages
 
 
     },
@@ -55,6 +56,10 @@ var AppRouter = Backbone.Router.extend({
     showSuccess: function() {
         console.log("Success view would be rendered here.");
         new SuccessView();
+    },
+    showNotFound: function(path) {
+        console.error('No route for path', path);
+        
     }
 
 });

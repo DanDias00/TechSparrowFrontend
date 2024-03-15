@@ -55,8 +55,7 @@ var ForgotPasswordView = Backbone.View.extend({
             type: 'POST',
             data: { email: email },
             success: function(response) {
-                // Notify user of email sent
-                alert('If there is an account associated with ' + email + ' you will receive an email with instructions to reset your password.');
+                
                 self.clearForm();
                 self.undelegateEvents();
                 Backbone.history.navigate('email_success', { trigger: true });
