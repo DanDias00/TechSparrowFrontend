@@ -63,3 +63,44 @@ body {
     border-radius: 10px;
     width: 35vw !important;
 }
+.email-success-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+  
+    background-color: antiquewhite;
+}
+.email-success-inner{
+    background-color: whitesmoke;
+    padding: 40px;
+    border-radius: 10px;
+    width: 25vw !important;
+    text-align: center;
+}
+.email-success-icon{
+    margin-left: 1vw;
+}
+.reset-password-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+  
+    background-color: antiquewhite;
+}
+.success-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+  
+    background-color: antiquewhite;
+}
+.success-inner{
+    background-color: whitesmoke;
+    padding: 40px;
+    border-radius: 10px;
+    width: 25vw !important;
+    text-align: center;
+}
