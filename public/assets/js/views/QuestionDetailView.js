@@ -10,9 +10,18 @@ var QuestionDetailView = Backbone.View.extend({
     initialize: function(options) {
         console.log('QuestionDetailView initialized with options');
         this.model = new QuestionDetailModel({id: options.id});
-        this.loadTemplate(this.renderView); // Pass the renderView method as a callback
+       
+        this.loadTemplate(this.renderView); 
+        window.onpopstate = this.handleBackButtonEvent.bind(this);
     },
-
+    handleBackButtonEvent: function(event) {
+        // Handle the back button event here
+        console.log('User navigated to:', window.location.pathname);
+        this.undelegateEvents(); // Remove any existing event listeners
+    
+        
+    },
+   
     loadTemplate: function(callback) {
         var self = this;
         // Load the external template file
@@ -23,6 +32,7 @@ var QuestionDetailView = Backbone.View.extend({
                 self.model.fetch({
                     success: function() {
                         console.log('Question details fetched:', self.model.toJSON());
+                        console.log("model id",self.model.id);
                         callback.call(self); // Render the view after template is loaded and data is fetched
                     },
                     error: function(model, response, options) {
@@ -34,8 +44,10 @@ var QuestionDetailView = Backbone.View.extend({
     },
 
     renderView: function() {
-        // Make sure the template is loaded before rendering
+        
+        // Making sure the template is loaded before rendering
         if (this.template) {
+            this.$el.empty();
            
             this.$el.html(this.template(this.model.toJSON()));
         }
@@ -45,26 +57,46 @@ var QuestionDetailView = Backbone.View.extend({
         e.preventDefault();
         var $form = $(e.target).closest("form");
         var data = $form.serialize();
+        var self = this;
 
-        // Implement AJAX submission for the comment
-        $.post('/index.php/submit_comment', data, function(response) {
+         // Send the form data to the server asynchronously.
+        $.post('http://localhost/TechSparrow/index.php/comment', data, function(response) {
             console.log("Comment submitted successfully.");
-            // Optionally refresh comments list here
+            self.refreshQuestion();
+          
         }).fail(function() {
             console.error("Error submitting comment.");
         });
+     
     },
     submitAnswer: function(e) {
         e.preventDefault();
         var $form = $(e.target).closest("form");
         var data = $form.serialize();
+        var self = this;
 
-        // Implement AJAX submission for the answer
-        $.post('http://localhost/TechSparrow/index.php/api/answer/submit', data, function(response) {
+         // Send the form data to the server asynchronously.
+        $.post('http://localhost/TechSparrow/index.php/answer', data, function(response) {
             console.log("Answer submitted successfully.");
-            // Optionally refresh answers list here
+            self.refreshQuestion();
         }).fail(function() {
             console.error("Error submitting answer.");
         });
-    }
+       
+    },
+     // Fetches the latest question details, including any new answers or comments.
+    refreshQuestion: function() {
+    
+        this.model.fetch({
+            success: function(model, response, options) {
+                console.log('Question and answers refreshed:', model.toJSON());
+                // Re-render the view to update list
+                this.renderView();
+            }.bind(this),
+            error: function(model, response, options) {
+                console.error("Error refreshing answers:", response);
+            }
+        });
+    
+}
 });
