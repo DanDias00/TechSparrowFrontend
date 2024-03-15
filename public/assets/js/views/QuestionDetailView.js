@@ -25,8 +25,8 @@ var QuestionDetailView = Backbone.View.extend({
     loadTemplate: function(callback) {
         var self = this;
         // Load the external template file
-        $.get('assets/html/question-detail-template.html', function(templateHtml) {
-            self.template = _.template(templateHtml);
+        $.get('assets/html/question-detail-template.html', function(templateData) {
+            self.template = _.template(templateData);
             // If there's a model id, fetch the model data
             if (self.model.id) {
                 self.model.fetch({

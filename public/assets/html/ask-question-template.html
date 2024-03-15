@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ask a Question - Tech Sparrow</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            background-color: antiquewhite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container col-7 mt-5 mb-5">
+        <h1>Ask a Question</h1>
+    
+            <!-- The underscore template starts here -->
+            <form id="ask-question-form">
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="Be specific and imagine you're asking a question to another person." required>
+                </div>
+                
+                <!-- Body -->
+                <div class="form-group">
+                    <label for="body">Body</label>
+                    <textarea class="form-control" id="body" rows="6" required placeholder="The body of your question contains your problem details and results."></textarea>
+                </div>
+                
+                <!-- Tags -->
+                <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <input type="text" class="form-control" id="tags" placeholder="Add up to 5 tags to describe what your question is about.">
+                    <small id="tagsHelp" class="form-text text-muted">Separate tags with commas (e.g., java, php, sql).</small>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="button" class="btn btn-warning" id="submit-question">Submit Your Question</button>
+            </form>
+           
+    
+    </div>
+</body>
+</html>

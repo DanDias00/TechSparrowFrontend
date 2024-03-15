@@ -5,7 +5,9 @@ var AppRouter = Backbone.Router.extend({
         'login': 'showLogin',      // #login
         'register': 'showRegister', // #register
         'questions': 'showQuestions', // #questions
-        'questions/:id': 'showQuestionDetail'
+        'questions/:id': 'showQuestionDetail',
+        'ask': 'showAskQuestion' // #ask
+
     },
 
     showLanding: function() {
@@ -28,6 +30,10 @@ var AppRouter = Backbone.Router.extend({
     },
     showQuestionDetail: function(id) {
         new QuestionDetailView({id: id});
+    },
+    showAskQuestion: function() {
+        console.log("Ask question view would be rendered here.");
+        new AskQuestionView();
     }
 
 });

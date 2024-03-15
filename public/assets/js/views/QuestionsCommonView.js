@@ -21,7 +21,7 @@ var QuestionsCommonView = Backbone.View.extend({
                                 <input type="search" name="q" class="form-control" placeholder="Search questions...">
                                 <button type="submit" class="btn btn-outline-success ml-2">Search</button>
                             </form>
-                            <a href="ask" class="btn btn-warning">Ask a Question</a>
+                            <a href="#ask" class="btn btn-warning">Ask a Question</a>
                         </div>
                     </div>
                 </div>
