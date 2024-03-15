@@ -19,7 +19,7 @@ var LoginView = Backbone.View.extend({
                     </div>
                     <button type="submit" class="btn btn-primary btn-block" id="loginButton">Log in</button>
                     <p class="forgot-password text-right mt-3">
-                        Forgot <a href="#resetPassword">password</a>
+                        Forgot <a href="#forgot">password</a>
                     </p>
                     <p class="account">
                         Don't have an account? <a href="#register">Sign up</a>
