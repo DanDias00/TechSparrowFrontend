@@ -104,3 +104,7 @@ body {
     width: 25vw !important;
     text-align: center;
 }
+#all-questions-btn.btn-link {
+    text-decoration: none; /* Remove underline */
+
+}

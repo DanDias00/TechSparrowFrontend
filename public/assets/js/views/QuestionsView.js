@@ -3,7 +3,9 @@ var QuestionsView = Backbone.View.extend({
 
     initialize: function(options) {
         this.collection = options.collection || new QuestionsCollection();
+        console.log('QuestionsView initialized with collection:', this.collection);
         this.listenTo(this.collection, 'sync', this.render); // Listen to the sync event to render
+        this.listenTo(this.collection, 'reset', this.render); // Listen to the collection's error event    
         this.listenTo(this.collection, 'error', this.handleError); // Listen to the collection's error event
         this.questionListView = new QuestionsCommonView(); // Create a new instance of the common view
         
@@ -19,6 +21,7 @@ var QuestionsView = Backbone.View.extend({
             var questionEl = $('<div class="question-content"></div>').appendTo(this.$el);
             var questionView = new QuestionView({ model: question, el: questionEl });
             questionView.render();
+       
         }, this);
         return this;
     },
@@ -35,6 +38,7 @@ var QuestionsView = Backbone.View.extend({
     }
 });
 
-function showQuestions1() {
-    new QuestionsView({ collection: new QuestionsCollection() });
-}
+// function showQuestions1() {
+//     new QuestionsView({ collection: new QuestionsCollection() });
+// }
+

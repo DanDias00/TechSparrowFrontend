@@ -30,8 +30,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     showQuestions: function() {
-        showQuestions1();
-        
+        new QuestionsView({ collection: new QuestionsCollection() }); 
        
     },
     showQuestionDetail: function(id) {
