@@ -9,8 +9,9 @@ var QuestionsCommonView = Backbone.View.extend({
 
     initialize: function () {
         this.collection = new QuestionsCollection();
-      
         this.listenTo(this.collection, 'reset', this.renderQuestionsView);
+         // Listen to the custom event 'noResultsFound' to handle no results scenario
+        this.listenTo(this.collection, 'noResultsFound', this.renderNoResultsMessage);
     },
 
     render: function () {
@@ -38,40 +39,45 @@ var QuestionsCommonView = Backbone.View.extend({
     },
 
     onSearchSubmit: function (e) {
-        console.log('searching button')
         e.preventDefault(); // Prevent the default form submission behavior
         var query = this.$('.search-input').val().trim(); // Get the search input value
         if (query) {
             this.searchQuestions(query);
             this.$('.search-input').val(''); // Clear the search input
-            console.log('rendering done')
-            this.render();
-            
-        }
-        
+        }   
     },
-    fetchAllQuestions: function() { //Not working
-        // Check for existence before calling render
-            if (this.questionsView) {
-                this.questionsView.render();
-            } else {
-                console.error("questionsView is not initialized.");
+
+    fetchAllQuestions: function() { 
+        var self = this;
+        // Fetch the collection again from the server to retrieve all questions
+        this.collection.fetch({
+            success: function(collection, response) {
+                // Render the view with the fetched collection
+                self.renderQuestionsView();
+            },
+            error: function(collection, response) {
+                // Handle error
+               // console.error("Failed to fetch all questions. Response:", response.responseText);
             }
+        });
     },
 
     searchQuestions: function (query) {
-        console.log('Searching for questions:', query);
-        this.collection.search(query);
+        var self = this;
+        this.collection.search(query) // Search the collection with the query
     },
-    renderQuestionsView: function() {
-        // Render QuestionsView whenever the collection is reset
-        // Ensure QuestionsView replaces its content in the DOM correctly
-        this.questionsView = new QuestionsView({ collection: this.collection });
-        this.questionsView.render();
-        
-       
-        this.$('#question').html(this.questionsView.el); 
+    
 
+    renderQuestionsView: function() {
+        this.questionsView = new QuestionsView({ collection: this.collection });
+        this.undelegateEvents(); // Remove any existing event listeners
+
+    },
+    renderNoResultsMessage: function() {
+        console.log('inside renderNoResultsMessage')
+        alert('No results found. Please try another search query.');
+        
+        
     }
 });
 

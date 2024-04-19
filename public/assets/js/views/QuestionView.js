@@ -15,6 +15,7 @@ var QuestionView = Backbone.View.extend({
     },
     
     render: function() {
+       
         // Ensure the template is loaded
         if (this.template) {
             // Use the model data
