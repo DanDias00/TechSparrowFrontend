@@ -87,16 +87,12 @@
 		}
     </style>
 
-    <div id="navbar-placeholder"></div>
-
-    
+    <div id="navbarContainer"></div>
 </head>
 <body>
 
-    <div id="app">
-
-    </div> <!-- The main application container -->
-    <div id="question"></div>
+    <div id="app" style="min-height:81vh ;"> </div> <!-- The main application container -->
+    
     <div id="footer-placeholder"></div>
 
 
@@ -204,6 +200,7 @@
     <script src="assets/js/models/QuestionModel.js"></script>
     <script src="assets/js/models/AnswerModel.js"></script>
     <script src="assets/js/models/QuestionDetailModel.js"></script>
+    <script src="assets/js/models/SessionModel.js"></script> 
     <script src="assets/js/collections/AnswersCollection.js"></script>
 
     <script src="assets/js/collections/QuestionsCollection.js"></script>
@@ -217,39 +214,51 @@
     <script src="assets/js/views/EmailSuccessView.js"></script>
     <script src="assets/js/views/QuestionDetailView.js"></script>
     <script src="assets/js/views/AskQuestionView.js"></script>
+    <script src="assets/js/views/NavbarView.js"></script>
+    <script src="assets/js/views/NotFoundView.js"></script>
+    <script src="assets/js/views/MyProfileView.js"></script>
 
     <!-- <script src="assets/js/views/RegisterView.js"></script> -->
     <script src="assets/js/views/QuestionsCommonView.js"></script>
-
     <script src="assets/js/views/QuestionsView.js"></script>
     <script src="assets/js/views/QuestionView.js"></script>
-
-    
     <script src="assets/js/routers/AppRouter.js"></script>
+      <!-- Include the application's initialization script -->
+    <script src="assets/js/app.js"></script>
     
-
-<script>
-    $(function(){
-      $("#navbar-placeholder").load("assets/html/nav.html");
-    });
-    </script>
     <script>
         $(function(){
             $("#footer-placeholder").load("assets/html/footer.html"); 
           });
     </script>
 
-    <!-- Include the application's initialization script -->
-    <script src="assets/js/app.js"></script>
 
-    <script type="text/javascript">
+    <!-- <script>
         // Example JavaScript to dynamically add "My Profile" link based on session state
         $(document).ready(function() {
-          var loggedIn = false; // This should be dynamically determined based on your app's session state
+          $("#navbar-placeholder").load("assets/html/nav.html",function(){
+          var loggedIn = true; // This should be dynamically determined based on your app's session state
           if (loggedIn) {
             $('#session-based-links').append('<li class="nav-item"><a class="nav-link" href="#myprofile"><i class="fa fa-user" aria-hidden="true"></i> My Profile</a></li>');
           }
         });
+    });
+      </script> -->
+
+      <script>
+                // Retrieve session data from local storage or create a new session
+            var sessionData = JSON.parse(localStorage.getItem('session')) || { loggedIn: false };
+            console.log(sessionData);
+            var session = new SessionModel(sessionData);
+
+
+            // Create an instance of the navbar view with the session model
+            var navbarView = new NavbarView({ model: session });
+
+            // Listen for changes to the session model and update local storage
+            session.on('change', function() {
+                localStorage.setItem('session', JSON.stringify(session.toJSON()));
+            });
       </script>
 </body>
 </html>
