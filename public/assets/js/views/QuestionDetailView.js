@@ -4,7 +4,9 @@ var QuestionDetailView = Backbone.View.extend({
 
     events: {
         "click .submit-comment": "submitComment",
-        "click .submit-answer": "submitAnswer"
+        "click .submit-answer": "submitAnswer",
+        "click .upvote": "upvoteAnswer",
+        "click .downvote": "downvoteAnswer"
     },
 
     initialize: function(options) {
@@ -15,7 +17,6 @@ var QuestionDetailView = Backbone.View.extend({
         window.onpopstate = this.handleBackButtonEvent.bind(this);
     },
     handleBackButtonEvent: function(event) {
-        // Handle the back button event here
         console.log('User navigated to:', window.location.pathname);
         this.undelegateEvents(); // Remove any existing event listeners
     
@@ -44,7 +45,6 @@ var QuestionDetailView = Backbone.View.extend({
     },
 
     renderView: function() {
-        
         // Making sure the template is loaded before rendering
         if (this.template) {
             this.$el.empty();
@@ -97,6 +97,37 @@ var QuestionDetailView = Backbone.View.extend({
                 console.error("Error refreshing answers:", response);
             }
         });
-    
-}
+    },
+
+    upvoteAnswer: function(e) {
+        e.preventDefault();
+        console.log("upvote");
+        var answerId = $(e.currentTarget).data('answer-id');
+        this.vote(answerId, 'upvote');
+    },
+    downvoteAnswer: function(e) {
+        e.preventDefault();
+        console.log("downvote");
+        var answerId = $(e.currentTarget).data('answer-id');
+        this.vote(answerId, 'downvote');
+    },
+    vote: function(answerId, type) {
+        var self = this;
+        $.ajax({
+            url: 'http://localhost/TechSparrow/index.php/answer/vote/' + type, // The endpoint for voting
+            type: 'POST',
+            data: { answer_id: answerId },
+            success: function(response) {
+                if (response.status === 'success') {
+                    console.log(type + " success:", response);
+                    self.refreshQuestion();
+                } else {
+                    console.error(type + " error:", response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(type + " failure:", error);
+            }
+        });
+    },
 });
