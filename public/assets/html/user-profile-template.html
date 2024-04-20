@@ -1,18 +1,36 @@
+<style>
+    .user-profile-wrapper {
+        width: 50%;
+        margin: 0 auto; /* This will center the div horizontally */
+        height: 81vh;
+    }
+    .user-profile-wrapper .delete-section {
+       
+        float: right;
+    }
+
+   .user-details p{
+    margin-top: 45px
+   }
+</style>
+
 <!-- userProfileTemplate.html -->
 <div class="user-profile-wrapper">
     <h1>My Profile</h1>
     <p>Here you can view and manage your details</p>
     <div class="user-details">
-        <p>Username: <%= username %> 😊</p>
-        <p>Email: <%= email %> 😊</p>
-        <p>Reset Password:</p>
-        <input type="password" id="resetPassword" placeholder="Enter new password">
+        <p><strong>Username:</strong> <%= username %> </p>
+        <p><strong>Email:</strong> <%= email %> </p>
+        <form id="resetPasswordForm">
+        <div class="form-group"> 
+            <p><strong>Reset Password:</strong>
+            <input type="password" id="resetPasswordinput" class="form-control" placeholder="Enter new password">
+            <button id="resetPasswordButton" class="btn btn-primary mt-2">Reset</button></p>
+        </div>
+    </form>
     </div>
-    <button id="logoutButton" class="btn btn-warning">Log out</button>
-    <button id="deleteAccountButton" class="btn btn-danger">Delete Account</button>
-    <p>(Deleting account action cannot be undone)</p>
-    
-    <div id="questionsAnswersContainer">
-        <!-- User's questions and answers will be rendered here -->
+    <div class="delete-section">
+        <button id="logoutButton" class="btn btn-warning">Log out</button>
+        <button id="deleteAccountButton" class="btn btn-danger">Delete Account</button>
     </div>
 </div>
