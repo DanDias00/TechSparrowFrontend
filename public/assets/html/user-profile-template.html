@@ -12,10 +12,17 @@
    .user-details p{
     margin-top: 45px
    }
+   .profile-container{
+    margin-top: 30px;
+    background-color:cadetblue;
+    padding: 50px;
+    border-radius: 20px;
+   }
 </style>
 
 <!-- userProfileTemplate.html -->
 <div class="user-profile-wrapper">
+    <div class="profile-container">
     <h1>My Profile</h1>
     <p>Here you can view and manage your details</p>
     <div class="user-details">
@@ -32,5 +39,6 @@
     <div class="delete-section">
         <button id="logoutButton" class="btn btn-warning">Log out</button>
         <button id="deleteAccountButton" class="btn btn-danger">Delete Account</button>
+    </div>
     </div>
 </div>

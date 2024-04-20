@@ -51,7 +51,7 @@
                                         <input type="hidden" name="answer_id" value="<%= answer.id %>">
                                         <input type="hidden" name="question_id" value="<%= question.id %>">
                                         <div class="form-group">
-                                            <textarea name="comment_body" required placeholder="Add a comment.." class="form-control mt-2"></textarea>
+                                            <textarea name="comment_body" required placeholder="Add a comment.." class="form-control mt-2" id="comment-textfield"></textarea>
                                         </div>
                                         <button type="button" class="btn btn-primary mb-2 submit-comment">Comment</button>
                                     </form>
@@ -66,7 +66,7 @@
                 <form class="submit-answer-form">
                     <input type="hidden" name="question_id" value="<%= question.id %>">
                     <div class="form-group">
-                        <textarea class="form-control" name="body" rows="3" required placeholder="Type your answer here..."></textarea>
+                        <textarea class="form-control" id="answer-textfield" name="body" rows="3" required placeholder="Type your answer here..."></textarea>
                     </div>
                     <button type="button" class="btn btn-primary mb-2 submit-answer">Submit Answer</button>
                 </form>
