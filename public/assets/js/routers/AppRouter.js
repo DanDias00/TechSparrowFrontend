@@ -5,12 +5,14 @@ var AppRouter = Backbone.Router.extend({
         'login': 'showLogin',      // #login
         'register': 'showRegister', // #register
         'questions': 'showQuestions', // #questions
-        'questions/:id': 'showQuestionDetail',
+        'questions/:id': 'showQuestionDetail', // #questions/:id
         'ask': 'showAskQuestion', // #ask
         'forgot': 'showForgotPassword', // #forgot
         'reset_password/:id': 'showResetPassword', // #reset_password
-        'email_success': 'showEmailSuccess', // #email_sucess
+        'email_success': 'showEmailSuccess', // #email_success
         'success': 'showSuccess', // #success
+        'myProfile':'myProfile',// #myProfile
+        'accountDelete': 'showAccountDeleteSuccess', // #accountDelete
         '*path': 'showNotFound' // Catch-all for 404 Not Found pages
 
 
@@ -26,38 +28,50 @@ var AppRouter = Backbone.Router.extend({
 
     showRegister: function() {
        new RegisterView();
-        console.log("Registration view would be rendered here.");
+      
     },
 
     showQuestions: function() {
-        new QuestionsView({ collection: new QuestionsCollection() }); 
-       
+        if(localStorage.getItem('session')){
+            new QuestionsView({ collection: new QuestionsCollection() });
+        }else{
+            Backbone.history.navigate('login', { trigger: true });
+        }  
     },
     showQuestionDetail: function(id) {
         new QuestionDetailView({id: id});
     },
     showAskQuestion: function() {
-        console.log("Ask question view would be rendered here.");
+      
         new AskQuestionView();
     },
     showForgotPassword: function() {
-        console.log("Forgot password view would be rendered here.");
+      
         new ForgotPasswordView();
     },
     showResetPassword: function(id) {
-        console.log("Reset password view would be rendered here.");
+    
         new ResetPasswordView({id: id});
     },
     showEmailSuccess: function() {
-        console.log("Email success view would be rendered here.");
+      
         new EmailSuccessView();
     },
     showSuccess: function() {
-        console.log("Success view would be rendered here.");
+     
         new SuccessView();
     },
-    showNotFound: function(path) {
-        console.error('No route for path', path);
+
+    myProfile:function(){
+
+        new MyProfileView();
+
+    },
+    showAccountDeleteSuccess: function() {
+        new AccountDeleteSuccessView();
+    },
+    showNotFound: function() {
+        new NotFoundView();
         
     }
 
