@@ -10,17 +10,30 @@
                 <span> - <%= question.answer_count %> Answers</span>
             </div>
         </div>
-    
             <% if (answers && answers.length > 0) { %>
                 <h3>Answers:</h3>
                 <% _.each(answers, function(answer) { %>
                     <div class="answer mt-3 mb-3">
                         <div class="answer-body">
                             <div class="row">
-                                <div class="col-md-10">
-                                    <%= answer.body %>
-                                    <div class="text-muted">Answered by: <%= answer.username %></div>
+                                <div class="col-md-10" style="display: flex; flex-direction: column;">
+                                    <div style="flex-grow: 1;">
+                                        <%= answer.body %>
+                                    </div>
+                                    <div class="row text-muted ml-1" style="margin-top: auto;">Answered by: <%= answer.username %></div>
                                 </div>
+                                <div class="col-md-2">
+                                    <!-- Vote count and voting icons -->
+                                    <div class="voting d-flex flex-column align-items-center justify-content-center">
+                                        <button type="button" class="vote-btn upvote" data-answer-id="<%= answer.id %>" style="outline: none; border: none;">
+                                            <img src="assets/images/like.png" width="50px" height="50px"  alt="Upvote">
+                                        </button>
+                                        <div class="vote-count py-2"><%= answer.votes %></div>
+                                        <button type="button" class="vote-btn downvote" data-answer-id="<%= answer.id %>" style="outline: none; border: none;">
+                                            <img src="assets/images/unlike.png" width="50px" height="50px" alt="Downvote">
+                                        </button>
+                                    </div>
+                                </div>  
                             </div>
                         </div>
                     </div>
@@ -38,7 +51,7 @@
                                         <input type="hidden" name="answer_id" value="<%= answer.id %>">
                                         <input type="hidden" name="question_id" value="<%= question.id %>">
                                         <div class="form-group">
-                                            <textarea name="comment_body" placeholder="Add a comment.." class="form-control mt-2"></textarea>
+                                            <textarea name="comment_body" required placeholder="Add a comment.." class="form-control mt-2"></textarea>
                                         </div>
                                         <button type="button" class="btn btn-primary mb-2 submit-comment">Comment</button>
                                     </form>
