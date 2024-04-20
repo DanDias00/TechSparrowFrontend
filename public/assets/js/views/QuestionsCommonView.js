@@ -20,7 +20,7 @@ var QuestionsCommonView = Backbone.View.extend({
                 <div class="container mt-4">
                     <div class="row align-items-center">
                             <div class="question-header col-6 d-flex justify-content-center">
-                                <button id="all-questions-btn" class="btn btn-link">All Questions</button>
+                                <button id="all-questions-btn" class="btn btn-warning">All Questions</button>
                         </div>
                         <div class="ask-header col-6 d-flex justify-content-center">
                             <!-- Search form - updated to have class for event binding -->

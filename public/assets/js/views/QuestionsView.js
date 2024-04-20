@@ -35,10 +35,14 @@ var QuestionsView = Backbone.View.extend({
      
             console.error("Unauthorized access, redirecting...");
             Backbone.history.navigate('login', { trigger: true });
-        } else {
+        } else if (response.status === 404) {
             console.error("Failed to fetch questions. Response:", response.responseText);
-            
-        }
+            var commonView = new QuestionsCommonView();
+            this.$el.append(commonView.render().el);
+   
+        }else {
+            console.error("Failed to fetch questions. Response:", response.responseText);
+    }
     }
 });
 

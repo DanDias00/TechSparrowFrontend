@@ -59,6 +59,12 @@ var QuestionDetailView = Backbone.View.extend({
         var data = $form.serialize();
         var self = this;
 
+        //check if the comment is empty
+        if($form.find('textarea').val().trim() === '') {
+            alert('Comment cannot be empty');
+            return;
+        }
+
          // Send the form data to the server asynchronously.
         $.post('http://localhost/TechSparrow/index.php/comment', data, function(response) {
             console.log("Comment submitted successfully.");
@@ -113,20 +119,28 @@ var QuestionDetailView = Backbone.View.extend({
     },
     vote: function(answerId, type) {
         var self = this;
+        var sessionData = JSON.parse(localStorage.getItem('session'));
+        var $user_id = sessionData.userId;
+       
         $.ajax({
             url: 'http://localhost/TechSparrow/index.php/answer/vote/' + type, // The endpoint for voting
             type: 'POST',
-            data: { answer_id: answerId },
+            data: { answer_id: answerId, user_id: $user_id},
             success: function(response) {
-                if (response.status === 'success') {
-                    console.log(type + " success:", response);
-                    self.refreshQuestion();
-                } else {
-                    console.error(type + " error:", response.message);
-                }
+                
+                    self.refreshQuestion();   
             },
             error: function(xhr, status, error) {
-                console.error(type + " failure:", error);
+                
+                if (xhr.status === 400) {
+                    alert("You have already voted on this answer.");
+                }
+                else if (xhr.status === 401) {
+                    alert("You must be logged in to vote.");
+                }
+                else if (xhr.status === 500) {
+                    alert("An error occurred while voting.");
+                }
             }
         });
     },
