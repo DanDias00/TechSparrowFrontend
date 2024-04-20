@@ -35,6 +35,12 @@ var LoginView = Backbone.View.extend({
 
     initialize: function() {
         this.user = new UserModel();
+        this.session = new SessionModel();
+        console.log(this.session);
+        // $('#app').empty().html(this.template());
+        // // Apply CSS to hide navbar and footer
+        // $('#navbarContainer, #footer-placeholder').hide();
+        
         this.render();
     },
 
@@ -55,16 +61,26 @@ var LoginView = Backbone.View.extend({
     },
 
     login: function() {
+        var self = this; // Store the current context
 
-        
        $.ajax({
             url: 'http://localhost/TechSparrow/index.php/login', 
             type: 'POST',
             data: this.user.toJSON(),
             success: function(response) {
-                console.log('Login successful:', response);
 
+                self.session.set({
+                    loggedIn: true,
+                    userId: response.message.user_id,
+                    username: response.message.username
+
+                });
+                console.log("login done");
+                console.log(self.session);
+                localStorage.setItem('session', JSON.stringify(self.session.toJSON()));
+            
                 Backbone.history.navigate('questions', { trigger: true });
+            
                
             },
             error: function(jqXHR, textStatus, errorThrown) {
