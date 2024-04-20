@@ -6,10 +6,10 @@ var NotFoundView = Backbone.View.extend({
       
         <div class="container mt-5">
           <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-6 notfound-container">
               <div class="text-center">
                 <h1 class="display-3">404 Not Found</h1>
-                <p class="lead">Sorry, the page you are looking for does not exist.</p>
+                <p class="lead">Oops sorry, the page you are looking for does not exist.</p>
                 <button id="homeButton" class="btn btn-warning mt-3">Back to Home</button>
               </div>
             </div>
