@@ -4,8 +4,9 @@ body {
     background-color: antiquewhite !important;
 }
 
+
 .question{
-    background-color:white;
+    background-color:lightgray;
     padding:20px;
     border-radius:20px;
     margin-top:20px;
@@ -32,7 +33,7 @@ body {
 }
 
 .tag-label{
-    background-color: cornflowerblue;
+    background-color: cadetblue;
     border-radius: 5px;
  
     padding: 5px;
@@ -45,8 +46,9 @@ body {
     margin-left: 20px;
     margin-right: 20px;
     padding: 20px;
+    border-radius: 20px;
 
-    background-color: lightslategray;
+    background-color: whitesmoke;
 
 }
   
@@ -113,4 +115,17 @@ body {
 
 }
 
+#answer-textfield{
+    background-color: cadetblue;
+}
+#comment-textfield{
+   border-radius: 15px;
+}
 
+.notfound-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+
+}
