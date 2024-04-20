@@ -13,9 +13,7 @@ var NotFoundView = Backbone.View.extend({
                 <button id="homeButton" class="btn btn-warning mt-3">Back to Home</button>
               </div>
             </div>
-          </div>
-        
-       
+          </div> 
     `),
 
     events: {
@@ -36,7 +34,7 @@ var NotFoundView = Backbone.View.extend({
         this.showNavbarAndFooter(); 
       
       
-        Backbone.history.navigate('', { trigger: true });
+        Backbone.history.navigate('#', { trigger: true });
     },
 
     hideNavbarAndFooter: function() {
