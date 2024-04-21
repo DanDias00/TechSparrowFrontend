@@ -50,14 +50,19 @@ var QuestionsCommonView = Backbone.View.extend({
     fetchAllQuestions: function() { 
         var self = this;
         // Fetch the collection again from the server to retrieve all questions
+        
         this.collection.fetch({
+            reset: true,
             success: function(collection, response) {
                 // Render the view with the fetched collection
                 self.renderQuestionsView();
+                self.undelegateEvents(); // Remove any existing event listeners
+                
             },
             error: function(collection, response) {
                 // Handle error
                // console.error("Failed to fetch all questions. Response:", response.responseText);
+
             }
         });
     },
@@ -69,10 +74,22 @@ var QuestionsCommonView = Backbone.View.extend({
     
 
     renderQuestionsView: function() {
-        this.questionsView = new QuestionsView({ collection: this.collection });
+        // Check if the QuestionsView instance already exists
+        if (this.questionsView) {
+            // Update the collection of the existing QuestionsView instance
+            this.questionsView.collection = this.collection;
+            // Trigger a re-render of the QuestionsView
+            this.questionsView.render();
+        } else {
+            // Create and render the new QuestionsView instance with the updated collection
+            this.questionsView = new QuestionsView({ collection: this.collection });
+            // Append the view to the container element
+            this.$el.append(this.questionsView.render().el);
+        }
+    
         this.undelegateEvents(); // Remove any existing event listeners
-
     },
+    
     renderNoResultsMessage: function() {
         console.log('inside renderNoResultsMessage')
         alert('No results found. Please try another search query.');
