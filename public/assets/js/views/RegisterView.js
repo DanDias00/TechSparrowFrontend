@@ -5,6 +5,39 @@ var RegisterView = Backbone.View.extend({
 
     template: _.template(`
         <div class="register-auth-wrapper">
+        <!-- Bootstrap Modal for Error Messages -->
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="errorModalBody">
+                        <!-- Error message will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap Modal for Success Messages -->
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Success</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="successModalBody">
+                        <!-- Success message will be rendered here -->
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
             <div class="register-auth-inner">
                 <h2>Register</h2>
                 <form id="registerForm">
@@ -35,7 +68,8 @@ var RegisterView = Backbone.View.extend({
     `),
 
     events: {
-        'submit #registerForm': 'onFormSubmit'
+        'submit #registerForm': 'onFormSubmit',
+        'click .modal .close': 'hideModal'
     },
 
     initialize: function() {
@@ -59,17 +93,20 @@ var RegisterView = Backbone.View.extend({
 
         // Validate the inputs
         if (!username || !email || !password || !confirmPassword) {
-            alert('All fields are required.');
+           
+            this.showModal('Error', 'All fields are required.', '#errorModal');
             return false; // Stop further execution
         }
 
         if (!this.isValidEmail(email)) {
-            alert('Please enter a valid email address.');
+          
+            this.showModal('Error', 'Please enter a valid email address.', '#errorModal');
             return false; // Stop further execution
         }
 
         if (password !== confirmPassword) {
-            alert('Passwords do not match.');
+           
+            this.showModal('Error', 'Passwords do not match.', '#errorModal');
             return false; // Stop further execution
         }
 
@@ -91,14 +128,15 @@ var RegisterView = Backbone.View.extend({
     },
 
     register: function() {
-
+       
         
        $.ajax({
+        
             url: 'http://localhost/TechSparrow/index.php/register', 
             type: 'POST',
             data: this.user.toJSON(),
             success: function(response) {
-                console.log('Register successful:');
+               
 
                 Backbone.history.navigate('login', { trigger: true });
                
@@ -121,11 +159,23 @@ var RegisterView = Backbone.View.extend({
             }
                // Display error message to the user
             console.error(errorMessage);
-            alert(errorMessage);
+        
             }
             
         
         });
        
+    },
+    showModal: function(title, message, modalSelector) {
+        // Update modal title and body with provided title and message
+        this.$(modalSelector + 'Label').text(title);
+        this.$(modalSelector + 'Body').text(message);
+        // Show the modal
+        this.$(modalSelector).modal('show');
+    },
+
+    hideModal: function() {
+        // Hide the modal
+        this.$('.modal').modal('hide');
     }
 });

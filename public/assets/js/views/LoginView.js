@@ -1,10 +1,24 @@
-// views/LoginView.js
-
 var LoginView = Backbone.View.extend({
     el: '#app',
 
     template: _.template(`
         <div class="auth-wrapper">
+            <!-- Bootstrap Modal for Error Messages -->
+            <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="errorModalBody">
+                            <!-- Error message will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="auth-inner">
                 <h2>Login</h2>
                 <form id="loginForm">
@@ -30,28 +44,23 @@ var LoginView = Backbone.View.extend({
     `),
 
     events: {
-        'submit #loginForm': 'onFormSubmit'
+        'submit #loginForm': 'onFormSubmit',
+        'click .modal .close': 'hideErrorModal' // Event handler for close button
     },
 
     initialize: function() {
         this.user = new UserModel();
         this.session = new SessionModel();
-        console.log(this.session);
-        // $('#app').empty().html(this.template());
-        // // Apply CSS to hide navbar and footer
-        // $('#navbarContainer, #footer-placeholder').hide();
-        
         this.render();
     },
 
     render: function() {
-        $('#app').empty().html(this.template());
+        this.$el.empty().html(this.template());
         return this;
     },
 
     onFormSubmit: function(event) {
         event.preventDefault();
-        console.log('Form submitted');
         this.user.set({
             username: this.$('#username').val(),
             password: this.$('#password').val()
@@ -61,51 +70,55 @@ var LoginView = Backbone.View.extend({
     },
 
     login: function() {
-        var self = this; // Store the current context
+        var self = this;
 
-       $.ajax({
-            url: 'http://localhost/TechSparrow/index.php/login', 
+        $.ajax({
+            url: 'http://localhost/TechSparrow/index.php/login',
             type: 'POST',
             data: this.user.toJSON(),
             success: function(response) {
-
                 self.session.set({
                     loggedIn: true,
                     userId: response.message.user_id,
                     username: response.message.username
-
                 });
-                console.log("login done");
-                console.log(self.session);
+
                 localStorage.setItem('session', JSON.stringify(self.session.toJSON()));
-            
+
                 Backbone.history.navigate('questions', { trigger: true });
-            
-               
             },
             error: function(jqXHR, textStatus, errorThrown) {
-            
                 var errorMessage;
-            switch (jqXHR.status) {
-                case 404:
-                    errorMessage = 'URL not found.';
-                    break;
-                case 500:
-                    errorMessage = 'something went wrong.';
-                    break;
-                case 401:
-                    errorMessage = 'Unauthorized access.';
-                    break;
-                default:
-                    errorMessage = 'An error occurred.';
+                switch (jqXHR.status) {
+                    case 404:
+                        errorMessage = 'URL not found.';
+                        break;
+                    case 500:
+                        errorMessage = 'Something went wrong.';
+                        break;
+                    case 401:
+                        errorMessage = 'Unauthorized access.';
+                        break;
+                    default:
+                        errorMessage = 'An error occurred.';
+                }
+
+                // Display error message in Bootstrap modal
+                self.showErrorModal(errorMessage);
             }
-               // Display error message to the user
-            console.error(errorMessage);
-            alert(errorMessage);
-            }
-            
-        
         });
-       
+    },
+
+    showErrorModal: function(errorMessage) {
+        // Update modal body with error message
+        console.log("Error message: " + errorMessage);
+        this.$('#errorModalBody').text(errorMessage);
+        // Show the modal
+        this.$('#errorModal').modal('show');
+    },
+
+    hideErrorModal: function() {
+        // Hide the modal
+        this.$('#errorModal').modal('hide');
     }
 });

@@ -2,7 +2,7 @@
     .user-profile-wrapper {
         width: 50%;
         margin: 0 auto; /* This will center the div horizontally */
-        height: 81vh;
+        height: 77vh;
     }
     .user-profile-wrapper .delete-section {
        
@@ -22,6 +22,39 @@
 
 <!-- userProfileTemplate.html -->
 <div class="user-profile-wrapper">
+    <!-- Bootstrap Modal for Error Messages -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="errorModalBody">
+                    <!-- Error message will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap Modal for Success Messages -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Success</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="successModalBody">
+                    <!-- Success message will be rendered here -->
+                </div>
+               
+            </div>
+        </div>
+    </div>
     <div class="profile-container">
     <h1>My Profile</h1>
     <p>Here you can view and manage your details</p>

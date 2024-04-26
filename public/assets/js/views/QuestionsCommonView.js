@@ -4,7 +4,8 @@ var QuestionsCommonView = Backbone.View.extend({
 
     events: {
         'submit .search-form': 'onSearchSubmit',
-        'click #all-questions-btn': 'fetchAllQuestions' 
+        'click #all-questions-btn': 'fetchAllQuestions',
+        'click .modal .close': 'hideErrorModal' // Event handler for close button
     },
 
     initialize: function () {
@@ -17,6 +18,22 @@ var QuestionsCommonView = Backbone.View.extend({
     render: function () {
         this.$el.html(`
             <div class="common-view">
+            <!-- Bootstrap Modal for Error Messages -->
+            <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="errorModalBody">
+                            <!-- Error message will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div class="container mt-4">
                     <div class="row align-items-center">
                             <div class="question-header col-6 d-flex justify-content-center">
@@ -91,10 +108,23 @@ var QuestionsCommonView = Backbone.View.extend({
     },
     
     renderNoResultsMessage: function() {
-        console.log('inside renderNoResultsMessage')
-        alert('No results found. Please try another search query.');
+        errorMessage='No results found. Please try another search query.';
+        this.showErrorModal(errorMessage);
         
         
+    },
+
+    showErrorModal: function(errorMessage) {
+        // Update modal body with error message
+        console.log("Error message: " + errorMessage);
+        this.$('#errorModalBody').text(errorMessage);
+        // Show the modal
+        this.$('#errorModal').modal('show');
+    },
+
+    hideErrorModal: function() {
+        // Hide the modal
+        this.$('#errorModal').modal('hide');
     }
 });
 

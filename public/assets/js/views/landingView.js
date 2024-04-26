@@ -30,7 +30,7 @@ var LandingView = Backbone.View.extend({
     }
 });
 
-// This will be called from the router or app initialization code
-function showLandingPage() {
-    new LandingView();
-}
+// // This will be called from the router or app initialization code
+// function showLandingPage() {
+//     new LandingView();
+// }

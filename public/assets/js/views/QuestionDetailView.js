@@ -6,7 +6,8 @@ var QuestionDetailView = Backbone.View.extend({
         "click .submit-comment": "submitComment",
         "click .submit-answer": "submitAnswer",
         "click .upvote": "upvoteAnswer",
-        "click .downvote": "downvoteAnswer"
+        "click .downvote": "downvoteAnswer",
+        'click .modal .close': 'hideErrorModal' // Event handler for close button
     },
 
     initialize: function(options) {
@@ -37,7 +38,8 @@ var QuestionDetailView = Backbone.View.extend({
                         callback.call(self); // Render the view after template is loaded and data is fetched
                     },
                     error: function(model, response, options) {
-                        console.error("Error fetching question details:", response);
+                        self.showErrorModal("An error occurred while fetching question details.");
+                        
                     }
                 });
             }
@@ -61,7 +63,8 @@ var QuestionDetailView = Backbone.View.extend({
 
         //check if the comment is empty
         if($form.find('textarea').val().trim() === '') {
-            alert('Comment cannot be empty');
+           
+            self.showErrorModal("Comment cannot be empty.");
             return;
         }
 
@@ -71,7 +74,8 @@ var QuestionDetailView = Backbone.View.extend({
             self.refreshQuestion();
           
         }).fail(function() {
-            console.error("Error submitting comment.");
+            self.showErrorModal("An error occurred while submitting your comment.");   
+            
         });
      
     },
@@ -81,12 +85,19 @@ var QuestionDetailView = Backbone.View.extend({
         var data = $form.serialize();
         var self = this;
 
+        if($form.find('textarea').val().trim() === '') {
+           
+            self.showErrorModal("Answer cannot be empty.");
+            return;
+        }
+
          // Send the form data to the server asynchronously.
         $.post('http://localhost/TechSparrow/index.php/answer', data, function(response) {
             console.log("Answer submitted successfully.");
             self.refreshQuestion();
         }).fail(function() {
-            console.error("Error submitting answer.");
+            self.showErrorModal("An error occurred while submitting your answer.");
+            
         });
        
     },
@@ -100,7 +111,8 @@ var QuestionDetailView = Backbone.View.extend({
                 this.renderView();
             }.bind(this),
             error: function(model, response, options) {
-                console.error("Error refreshing answers:", response);
+                self.showErrorModal("An error occurred while refreshing the question.");
+                
             }
         });
     },
@@ -133,15 +145,30 @@ var QuestionDetailView = Backbone.View.extend({
             error: function(xhr, status, error) {
                 
                 if (xhr.status === 400) {
-                    alert("You have already voted on this answer.");
+                    
+                    self.showErrorModal("You have already voted on this answer.");
                 }
                 else if (xhr.status === 401) {
                     alert("You must be logged in to vote.");
+                    self.showErrorModal("You must be logged in to vote.");
                 }
                 else if (xhr.status === 500) {
-                    alert("An error occurred while voting.");
+                    self.showErrorModal("An error occurred while voting.");
+                    
                 }
             }
         });
     },
+    showErrorModal: function(errorMessage) {
+        // Update modal body with error message
+        console.log("Error message: " + errorMessage);
+        this.$('#errorModalBody').text(errorMessage);
+        // Show the modal
+        this.$('#errorModal').modal('show');
+    },
+
+    hideErrorModal: function() {
+        // Hide the modal
+        this.$('#errorModal').modal('hide');
+    }
 });
