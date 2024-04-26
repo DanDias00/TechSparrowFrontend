@@ -3,9 +3,11 @@ var AskQuestionView = Backbone.View.extend({
     el: '#app',
 
     events: {
-        'click #submit-question': 'submitQuestion'
-    },
+        'click #submit-question': 'submitQuestion',
+        'click .modal .close': 'hideErrorModal'
 
+    },
+    
     initialize: function() {
         var self = this;
         // Fetch the template content from the HTML file
@@ -36,7 +38,8 @@ var AskQuestionView = Backbone.View.extend({
             // Check if any of the fields are empty
         if (title.trim() === '' || body.trim() === '' || tags.trim() === '') {
             // Show an error message or perform some other action to indicate that fields are empty
-            alert('One or more fields are empty');
+            
+            this.showErrorModal('One or more fields are empty');
             // You can also display an error message to the user
             return;
         }
@@ -64,7 +67,8 @@ var AskQuestionView = Backbone.View.extend({
                 
             },
             error: function(xhr, status, error) {
-                console.error('Error submitting question', error);
+               
+                this.showErrorModal('Error submitting question');
                 // Handle errors, perhaps showing a message to the user
 
             }
@@ -74,5 +78,17 @@ var AskQuestionView = Backbone.View.extend({
         this.$('#title').val('');
         this.$('#body').val('');
         this.$('#tags').val('');
+    },
+    showErrorModal: function(errorMessage) {
+        // Update modal body with error message
+        console.log("Error message: " + errorMessage);
+        this.$('#errorModalBody').text(errorMessage);
+        // Show the modal
+        this.$('#errorModal').modal('show');
+    },
+
+    hideErrorModal: function() {
+        // Hide the modal
+        this.$('#errorModal').modal('hide');
     }
 });
