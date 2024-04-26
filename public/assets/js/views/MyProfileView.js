@@ -14,6 +14,7 @@ var MyProfileView = Backbone.View.extend({
         var self = this;
         // Retrieve session data from local storage
         var sessionData = JSON.parse(localStorage.getItem('session'));
+        document.title = "Tech Sparrow - My Profile";
     
         if (sessionData && sessionData.loggedIn) {
             // If session exists and user is logged in, fetch user data from the server
@@ -73,6 +74,7 @@ var MyProfileView = Backbone.View.extend({
                 
                 // Clear the user data from local storage
                 localStorage.removeItem('session');
+               
                 // Redirect the user to the logout success page
                 Backbone.history.navigate('', { trigger: true });
                

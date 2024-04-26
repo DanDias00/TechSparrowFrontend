@@ -2,6 +2,7 @@ var LoginView = Backbone.View.extend({
     el: '#app',
 
     template: _.template(`
+    
         <div class="auth-wrapper">
             <!-- Bootstrap Modal for Error Messages -->
             <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
@@ -52,6 +53,7 @@ var LoginView = Backbone.View.extend({
         this.user = new UserModel();
         this.session = new SessionModel();
         this.render();
+        document.title = "Login";
     },
 
     render: function() {
@@ -84,6 +86,8 @@ var LoginView = Backbone.View.extend({
                 });
 
                 localStorage.setItem('session', JSON.stringify(self.session.toJSON()));
+
+                self.session.trigger('change');
 
                 Backbone.history.navigate('questions', { trigger: true });
             },

@@ -11,6 +11,7 @@ var LandingView = Backbone.View.extend({
     },
 
     initialize: function() {
+        document.title = "Tech Sparrow - Home";
         this.render();
     },
 
@@ -30,7 +31,4 @@ var LandingView = Backbone.View.extend({
     }
 });
 
-// // This will be called from the router or app initialization code
-// function showLandingPage() {
-//     new LandingView();
-// }
+

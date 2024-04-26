@@ -11,6 +11,7 @@ var ContactFormView = Backbone.View.extend({
     initialize: function() {
         this.model = new ContactFormModel();
         this.fetchTemplate(); // Fetch the template when initializing
+        document.title = "Tech Sparrow - Contact Us";
     },
 
     fetchTemplate: function() {
