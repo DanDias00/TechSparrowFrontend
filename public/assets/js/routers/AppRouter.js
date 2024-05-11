@@ -12,7 +12,8 @@ var AppRouter = Backbone.Router.extend({
         'email_success': 'showEmailSuccess', // #email_success
         'success': 'showSuccess', // #success
         'myProfile':'myProfile',// #myProfile
-        'accountDelete': 'showAccountDeleteSuccess', // #accountDelete
+        'accountDelete': 'showAccountDeleteSuccess',
+        'contact':'showContact', // #accountDelete
         '*path': 'showNotFound' // Catch-all for 404 Not Found pages
 
 
@@ -70,9 +71,13 @@ var AppRouter = Backbone.Router.extend({
     showAccountDeleteSuccess: function() {
         new AccountDeleteSuccessView();
     },
+    showContact: function() {
+        new ContactFormView();
+    },
     showNotFound: function() {
         new NotFoundView();
         
     }
+
 
 });
