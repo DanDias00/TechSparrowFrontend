@@ -69,7 +69,7 @@ var QuestionDetailView = Backbone.View.extend({
         }
 
          // Send the form data to the server asynchronously.
-        $.post('http://localhost/TechSparrow/index.php/comment', data, function(response) {
+        $.post('http://localhost/TechSparrow/comment', data, function(response) {
             console.log("Comment submitted successfully.");
             self.refreshQuestion();
           
@@ -92,7 +92,7 @@ var QuestionDetailView = Backbone.View.extend({
         }
 
          // Send the form data to the server asynchronously.
-        $.post('http://localhost/TechSparrow/index.php/answer', data, function(response) {
+        $.post('http://localhost/TechSparrow/answer', data, function(response) {
             console.log("Answer submitted successfully.");
             self.refreshQuestion();
         }).fail(function() {
@@ -135,7 +135,7 @@ var QuestionDetailView = Backbone.View.extend({
         var $user_id = sessionData.userId;
        
         $.ajax({
-            url: 'http://localhost/TechSparrow/index.php/answer/vote/' + type, // The endpoint for voting
+            url: 'http://localhost/TechSparrow/answer/vote/' + type, // The endpoint for voting
             type: 'POST',
             data: { answer_id: answerId, user_id: $user_id},
             success: function(response) {

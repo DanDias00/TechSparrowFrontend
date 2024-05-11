@@ -132,7 +132,7 @@ var RegisterView = Backbone.View.extend({
         
        $.ajax({
         
-            url: 'http://localhost/TechSparrow/index.php/register', 
+            url: 'http://localhost/TechSparrow/register', 
             type: 'POST',
             data: this.user.toJSON(),
             success: function(response) {

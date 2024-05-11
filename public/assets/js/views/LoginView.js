@@ -75,7 +75,7 @@ var LoginView = Backbone.View.extend({
         var self = this;
 
         $.ajax({
-            url: 'http://localhost/TechSparrow/index.php/login',
+            url: 'http://localhost/TechSparrow/login',
             type: 'POST',
             data: this.user.toJSON(),
             success: function(response) {

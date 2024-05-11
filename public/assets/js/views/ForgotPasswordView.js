@@ -51,7 +51,7 @@ var ForgotPasswordView = Backbone.View.extend({
         // Use $.ajax or another method to send the email to your backend
         var self = this;
         $.ajax({
-            url: 'http://localhost/TechSparrow/index.php/forgot_password',
+            url: 'http://localhost/TechSparrow/forgot_password',
             type: 'POST',
             data: { email: email },
             success: function(response) {

@@ -56,7 +56,7 @@ var AskQuestionView = Backbone.View.extend({
         // API call to send the data to the backend using AJAX
         $.ajax({
             type: 'POST',
-            url: 'http://localhost/TechSparrow/index.php/question',
+            url: 'http://localhost/TechSparrow/question',
    
             data: questionData,
             success: function(response) {

@@ -19,7 +19,7 @@ var MyProfileView = Backbone.View.extend({
         if (sessionData && sessionData.loggedIn) {
             // If session exists and user is logged in, fetch user data from the server
             $.ajax({
-                url: 'http://localhost/TechSparrow/index.php/profile',
+                url: 'http://localhost/TechSparrow/profile',
                 type: 'GET',
                 success: function(response) {
                     // Set the user model with the retrieved data
