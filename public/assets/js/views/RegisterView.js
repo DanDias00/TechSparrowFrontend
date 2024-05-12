@@ -47,7 +47,7 @@ var RegisterView = Backbone.View.extend({
                         <input type="text" class="form-control" id="username" placeholder="Enter your username" required autocomplete="username">
                     </div>
                     <div class="form-group">
-                        <label for="email">Username:</label>
+                        <label for="email">Email:</label>
                         <input type="text" class="form-control" id="email" placeholder="Enter your email" required autocomplete="email">
                     </div>
                     <div class="form-group">
