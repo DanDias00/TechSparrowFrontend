@@ -67,7 +67,7 @@ var MyProfileView = Backbone.View.extend({
     logout: function() {
         var self = this;
         $.ajax({
-            url: 'http://localhost/TechSparrow/index.php/logout',
+            url: 'http://localhost/TechSparrow/logout',
             type: 'GET',
             success: function(response) {
                 console.log('Logout successful:', response);
@@ -106,7 +106,7 @@ var MyProfileView = Backbone.View.extend({
         var userId = JSON.parse(localStorage.getItem('session')).user_id;
         console.log('Deleting account for user ID:', userId);
         $.ajax({
-            url: 'http://localhost/TechSparrow/index.php/delete_account/' + userId,
+            url: 'http://localhost/TechSparrow/delete_account/' + userId,
             type: 'POST', 
             success: function(response) {
                 // Remove the session data from local storage
@@ -114,6 +114,7 @@ var MyProfileView = Backbone.View.extend({
                 // Redirect the user to the delete success page
                 Backbone.history.navigate('accountDelete', { trigger: true });
                 self.showModal('Success', 'Account deleted successfully.', '#successModal');
+                self.undelegateEvents();
             },
             error: function(xhr, status, error) {
                 // Handle error if any
@@ -150,7 +151,7 @@ var MyProfileView = Backbone.View.extend({
         var self = this;
       
         $.ajax({
-            url: 'http://localhost/TechSparrow/index.php/reset_password',
+            url: 'http://localhost/TechSparrow/reset_password',
             type: 'POST',
             data: { user_id:userId, 
             password: newPassword },
