@@ -1,6 +1,6 @@
 // landingView.js
 var LandingView = Backbone.View.extend({
-    el: '#app', // This attaches to a DOM element with id="app"
+    el: '#app',
 
     template: _.template($('#static-template').html()),
 
@@ -10,24 +10,24 @@ var LandingView = Backbone.View.extend({
         'click #registerBtn': 'onRegisterClick'
     },
 
-    initialize: function() {
+    initialize: function () {
         document.title = "Tech Sparrow - Home";
         this.render();
     },
 
-    render: function() {
+    render: function () {
         this.$el.html(this.template());
         return this;
     },
 
-    onLoginClick: function() {
+    onLoginClick: function () {
         // Navigate to the login route
-        Backbone.history.navigate('login', {trigger: true});
+        Backbone.history.navigate('login', { trigger: true });
     },
 
-    onRegisterClick: function() {
+    onRegisterClick: function () {
         // Navigate to the register route
-        Backbone.history.navigate('register', {trigger: true});
+        Backbone.history.navigate('register', { trigger: true });
     }
 });
 

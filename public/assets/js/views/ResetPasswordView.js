@@ -29,7 +29,6 @@ var ResetPasswordView = Backbone.View.extend({
     },
     getUserIdFromUrl: function() {
         // Extract the user ID from the URL.
-        // You'll need to adjust this based on how the user ID is included in your URL.
         var urlFragment = Backbone.history.getFragment();
         var userIdMatch = urlFragment.match(/reset_password\/(\d+)/);
         return userIdMatch ? userIdMatch[1] : null;

@@ -21,16 +21,16 @@ var ForgotPasswordView = Backbone.View.extend({
         'submit #forgotPasswordForm': 'submitForgotPassword'
     },
 
-    initialize: function() {
+    initialize: function () {
         this.render();
     },
 
-    render: function() {
+    render: function () {
         this.$el.html(this.template());
         return this;
     },
 
-    submitForgotPassword: function(e) {
+    submitForgotPassword: function (e) {
         e.preventDefault();
 
         var email = this.$('#email').val().trim();
@@ -39,36 +39,33 @@ var ForgotPasswordView = Backbone.View.extend({
             return;
         }
 
-     
-
         // Submit email to the server for password reset processing
         this.requestPasswordReset(email);
     },
 
-    requestPasswordReset: function(email) {
+    requestPasswordReset: function (email) {
         // Perform the API call to initiate the password reset process
         console.log('Requesting password reset for:', email);
-        // Use $.ajax or another method to send the email to your backend
         var self = this;
         $.ajax({
             url: 'http://localhost/TechSparrow/forgot_password',
             type: 'POST',
             data: { email: email },
-            success: function(response) {
-                
+            success: function (response) {
+
                 self.clearForm();
                 self.undelegateEvents();
                 Backbone.history.navigate('email_success', { trigger: true });
             },
-            error: function() {
+            error: function () {
                 // Notify user of an error
                 alert('There was a problem processing your request. Please try again later.');
             }
         });
     },
-    clearForm: function() {
+    clearForm: function () {
         this.$('#email').val('');
-       
+
     }
 });
 

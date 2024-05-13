@@ -11,73 +11,71 @@ var AppRouter = Backbone.Router.extend({
         'reset_password/:id': 'showResetPassword', // #reset_password
         'email_success': 'showEmailSuccess', // #email_success
         'success': 'showSuccess', // #success
-        'myProfile':'myProfile',// #myProfile
+        'myProfile': 'myProfile',// #myProfile
         'accountDelete': 'showAccountDeleteSuccess',
-        'contact':'showContact', // #accountDelete
+        'contact': 'showContact', // #accountDelete
         '*path': 'showNotFound' // Catch-all for 404 Not Found pages
 
 
     },
 
-    showLanding: function() {
+    showLanding: function () {
         new LandingView();
     },
 
-    showLogin: function() {
+    showLogin: function () {
         new LoginView();
     },
 
-    showRegister: function() {
-       new RegisterView();
-      
+    showRegister: function () {
+        new RegisterView();
+
     },
 
-    showQuestions: function() {
-        if(localStorage.getItem('session')){
+    showQuestions: function () {
+        if (localStorage.getItem('session')) {
             new QuestionsView({ collection: new QuestionsCollection() });
-        }else{
+        } else {
             Backbone.history.navigate('login', { trigger: true });
-        }  
+        }
     },
-    showQuestionDetail: function(id) {
-        new QuestionDetailView({id: id});
+    showQuestionDetail: function (id) {
+        new QuestionDetailView({ id: id });
     },
-    showAskQuestion: function() {
-      
+    showAskQuestion: function () {
+
         new AskQuestionView();
     },
-    showForgotPassword: function() {
-      
+    showForgotPassword: function () {
+
         new ForgotPasswordView();
     },
-    showResetPassword: function(id) {
-    
-        new ResetPasswordView({id: id});
+    showResetPassword: function (id) {
+
+        new ResetPasswordView({ id: id });
     },
-    showEmailSuccess: function() {
-      
+    showEmailSuccess: function () {
+
         new EmailSuccessView();
     },
-    showSuccess: function() {
-     
+    showSuccess: function () {
+
         new SuccessView();
     },
 
-    myProfile:function(){
+    myProfile: function () {
 
         new MyProfileView();
 
     },
-    showAccountDeleteSuccess: function() {
+    showAccountDeleteSuccess: function () {
         new AccountDeleteSuccessView();
     },
-    showContact: function() {
+    showContact: function () {
         new ContactFormView();
     },
-    showNotFound: function() {
+    showNotFound: function () {
         new NotFoundView();
-        
+
     }
-
-
 });

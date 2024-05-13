@@ -4,7 +4,6 @@ var QuestionsCollection = Backbone.Collection.extend({
 
     search: function(query) {
         var self = this;
-        // Update the collection's URL with the search query
         this.url = 'http://localhost/TechSparrow/api/Questions/search?q=' + encodeURIComponent(query);
     
         // Fetching the results and reset the collection with them

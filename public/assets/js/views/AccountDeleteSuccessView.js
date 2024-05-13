@@ -20,17 +20,17 @@ var AccountDeleteSuccessView = Backbone.View.extend({
     events: {
         'click #homeButton': 'navigateHome'
     },
-    initialize: function() {
-      
+    initialize: function () {
+
         this.render();
     },
 
-    render: function() {
+    render: function () {
         this.$el.html(this.template());
         return this;
     },
 
-    navigateHome: function() {
+    navigateHome: function () {
         // Navigate to the home page or route
         Backbone.history.navigate('login', { trigger: true });
     }

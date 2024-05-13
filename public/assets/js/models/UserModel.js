@@ -4,7 +4,5 @@ var UserModel = Backbone.Model.extend({
         username: '',
         password: '',
         email: '',
-
     },
-
 });

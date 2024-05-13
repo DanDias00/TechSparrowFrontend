@@ -11,8 +11,7 @@ var QuestionsView = Backbone.View.extend({
         this.listenTo(this.collection, 'error', this.handleError); // Listen to the collection's error event
         this.questionListView = new QuestionsCommonView(); // Create a new instance of the common view
         
-        if(this.collection.length === 0) { // If the collection is empty (first load
-        // Fetch the collection
+        if(this.collection.length === 0) { // If the collection is empty Fetch the collection
         this.collection.fetch();
         }else {
             this.render();

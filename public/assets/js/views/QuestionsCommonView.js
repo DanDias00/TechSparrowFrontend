@@ -11,7 +11,6 @@ var QuestionsCommonView = Backbone.View.extend({
     initialize: function () {
         this.collection = new QuestionsCollection();
         this.listenTo(this.collection, 'reset', this.renderQuestionsView);
-         // Listen to the custom event 'noResultsFound' to handle no results scenario
         this.listenTo(this.collection, 'noResultsFound', this.renderNoResultsMessage);
     },
 
@@ -51,7 +50,7 @@ var QuestionsCommonView = Backbone.View.extend({
                 </div>
             </div>
         `);
-        
+
         return this;
     },
 
@@ -61,24 +60,24 @@ var QuestionsCommonView = Backbone.View.extend({
         if (query) {
             this.searchQuestions(query);
             this.$('.search-input').val(''); // Clear the search input
-        }   
+        }
     },
 
-    fetchAllQuestions: function() { 
+    fetchAllQuestions: function () {
         var self = this;
         // Fetch the collection again from the server to retrieve all questions
-        
+
         this.collection.fetch({
             reset: true,
-            success: function(collection, response) {
+            success: function (collection, response) {
                 // Render the view with the fetched collection
                 self.renderQuestionsView();
                 self.undelegateEvents(); // Remove any existing event listeners
-                
+
             },
-            error: function(collection, response) {
-                // Handle error
-               // console.error("Failed to fetch all questions. Response:", response.responseText);
+            error: function (collection, response) {
+                // Notify user of an error
+                self.showErrorModal("An error occurred while fetching questions.");
 
             }
         });
@@ -88,9 +87,9 @@ var QuestionsCommonView = Backbone.View.extend({
         var self = this;
         this.collection.search(query) // Search the collection with the query
     },
-    
 
-    renderQuestionsView: function() {
+
+    renderQuestionsView: function () {
         // Check if the QuestionsView instance already exists
         if (this.questionsView) {
             // Update the collection of the existing QuestionsView instance
@@ -103,18 +102,18 @@ var QuestionsCommonView = Backbone.View.extend({
             // Append the view to the container element
             this.$el.append(this.questionsView.render().el);
         }
-    
+
         this.undelegateEvents(); // Remove any existing event listeners
     },
-    
-    renderNoResultsMessage: function() {
-        errorMessage='No results found. Please try another search query.';
+
+    renderNoResultsMessage: function () {
+        errorMessage = 'No results found. Please try another search query.';
         this.showErrorModal(errorMessage);
-        
-        
+
+
     },
 
-    showErrorModal: function(errorMessage) {
+    showErrorModal: function (errorMessage) {
         // Update modal body with error message
         console.log("Error message: " + errorMessage);
         this.$('#errorModalBody').text(errorMessage);
@@ -122,7 +121,7 @@ var QuestionsCommonView = Backbone.View.extend({
         this.$('#errorModal').modal('show');
     },
 
-    hideErrorModal: function() {
+    hideErrorModal: function () {
         // Hide the modal
         this.$('#errorModal').modal('hide');
     }

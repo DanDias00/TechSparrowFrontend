@@ -17,9 +17,6 @@ var NavbarView = Backbone.View.extend({
                             <a class="nav-link" href="#questions">Questions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#services">Services</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="#contact">Contact</a>
                         </li>
                         <% if (loggedIn) { %>
