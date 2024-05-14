@@ -130,12 +130,13 @@ var QuestionDetailView = Backbone.View.extend({
     vote: function (answerId, type) {
         var self = this;
         var sessionData = JSON.parse(localStorage.getItem('session'));
-        var $user_id = sessionData.userId;
+        var $user_id = sessionData.user_id;
+        console.log("user id", $user_id);
 
         $.ajax({
             url: 'http://localhost/TechSparrow/answer/vote/' + type, // The endpoint for voting
             type: 'POST',
-            data: { answer_id: answerId, user_id: $user_id },
+            data: { answer_id: answerId,user_id: $user_id },
             success: function (response) {
 
                 self.refreshQuestion();
