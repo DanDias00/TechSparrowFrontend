@@ -1,10 +1,10 @@
 var QuestionsCollection = Backbone.Collection.extend({
     model: QuestionModel,
-    url: 'http://localhost/TechSparrow/questions', // API endpoint for fetching questions
+    url: 'http://localhost/TechSparrow/api/questions', // API endpoint for fetching questions
 
     search: function(query) {
         var self = this;
-        this.url = 'http://localhost/TechSparrow/api/Questions/search?q=' + encodeURIComponent(query);
+        this.url = 'http://localhost/TechSparrow/api/question/search?q=' + encodeURIComponent(query);
     
         // Fetching the results and reset the collection with them
         this.fetch({ 

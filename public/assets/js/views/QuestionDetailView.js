@@ -68,7 +68,7 @@ var QuestionDetailView = Backbone.View.extend({
             return;
         }
 
-        $.post('http://localhost/TechSparrow/comment', data, function (response) {
+        $.post('http://localhost/TechSparrow/api/comment', data, function (response) {
             console.log("Comment submitted successfully.");
             self.refreshQuestion();
 
@@ -90,7 +90,7 @@ var QuestionDetailView = Backbone.View.extend({
             return;
         }
 
-        $.post('http://localhost/TechSparrow/answer', data, function (response) {
+        $.post('http://localhost/TechSparrow/api/answer', data, function (response) {
             console.log("Answer submitted successfully.");
             self.refreshQuestion();
         }).fail(function () {
@@ -131,10 +131,9 @@ var QuestionDetailView = Backbone.View.extend({
         var self = this;
         var sessionData = JSON.parse(localStorage.getItem('session'));
         var $user_id = sessionData.user_id;
-        console.log("user id", $user_id);
 
         $.ajax({
-            url: 'http://localhost/TechSparrow/answer/vote/' + type, // The endpoint for voting
+            url: 'http://localhost/TechSparrow/api/answer/vote/' + type, // The endpoint for voting
             type: 'POST',
             data: { answer_id: answerId,user_id: $user_id },
             success: function (response) {

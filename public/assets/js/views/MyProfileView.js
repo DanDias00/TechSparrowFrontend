@@ -19,7 +19,7 @@ var MyProfileView = Backbone.View.extend({
         if (sessionData && sessionData.loggedIn) {
             // If session exists and user is logged in, fetch user data from the server
             $.ajax({
-                url: 'http://localhost/TechSparrow/profile',
+                url: 'http://localhost/TechSparrow/api/auth/profile',
                 type: 'GET',
                 success: function (response) {
                     // Set the user model with the retrieved data
@@ -67,7 +67,7 @@ var MyProfileView = Backbone.View.extend({
     logout: function () {
         var self = this;
         $.ajax({
-            url: 'http://localhost/TechSparrow/logout',
+            url: 'http://localhost/TechSparrow/api/auth/logout',
             type: 'GET',
             success: function (response) {
                 console.log('Logout successful:', response);
@@ -106,7 +106,7 @@ var MyProfileView = Backbone.View.extend({
         var userId = JSON.parse(localStorage.getItem('session')).user_id;
         console.log('Deleting account for user ID:', userId);
         $.ajax({
-            url: 'http://localhost/TechSparrow/delete_account/' + userId,
+            url: 'http://localhost/TechSparrow/api/auth/delete_account/'+userId,
             type: 'POST',
             success: function (response) {
                 // Remove the session data from local storage
@@ -150,7 +150,7 @@ var MyProfileView = Backbone.View.extend({
         var self = this;
 
         $.ajax({
-            url: 'http://localhost/TechSparrow/reset_password',
+            url: 'http://localhost/TechSparrow/api/auth/reset_password',
             type: 'POST',
             data: {
                 user_id: userId,

@@ -1,13 +1,12 @@
 
 var QuestionDetailModel = Backbone.Model.extend({
-    urlRoot: 'http://localhost/TechSparrow/api/Questions/view_question/', 
+    urlRoot: 'http://localhost/TechSparrow/api/question/', 
 
     initialize: function(options) {
         this.id = options.id;
     },
 
     url: function() {
-        // Construct the URL with the question ID
         return this.urlRoot + this.id;
     }
 });

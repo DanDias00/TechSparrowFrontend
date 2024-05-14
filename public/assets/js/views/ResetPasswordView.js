@@ -66,7 +66,7 @@ var ResetPasswordView = Backbone.View.extend({
         var self = this;
         //use ajax
         $.ajax({
-            url: 'http://localhost/TechSparrow/reset_password',
+            url: 'http://localhost/TechSparrow/api/auth/reset_password',
             type: 'POST',
             data: { user_id: this.userId, // Include the user ID in the request
             password: newPassword },

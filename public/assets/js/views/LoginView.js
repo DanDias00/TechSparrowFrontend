@@ -45,7 +45,7 @@ var LoginView = Backbone.View.extend({
     `),
 
     events: {
-        'submit #loginForm': 'onFormSubmit',
+        'submit #loginForm': 'onFormSubmit', // Event handler for form submission
         'click .modal .close': 'hideErrorModal' // Event handler for close button
     },
 
@@ -75,7 +75,7 @@ var LoginView = Backbone.View.extend({
         var self = this;
 
         $.ajax({
-            url: 'http://localhost/TechSparrow/login',
+            url: 'http://localhost/TechSparrow/api/auth/login',
             type: 'POST',
             data: this.user.toJSON(),
             success: function(response) {

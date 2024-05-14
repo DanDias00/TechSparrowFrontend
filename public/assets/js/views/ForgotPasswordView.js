@@ -48,7 +48,7 @@ var ForgotPasswordView = Backbone.View.extend({
         console.log('Requesting password reset for:', email);
         var self = this;
         $.ajax({
-            url: 'http://localhost/TechSparrow/forgot_password',
+            url: 'http://localhost/TechSparrow/api/auth/forgot_password',
             type: 'POST',
             data: { email: email },
             success: function (response) {
