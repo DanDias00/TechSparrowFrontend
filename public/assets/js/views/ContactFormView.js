@@ -43,6 +43,7 @@ var ContactFormView = Backbone.View.extend({
         });
 
         this.showModal('Success', 'Email Sent!', '#successModal');
+        this.clearForm();
 
 
     },
@@ -57,5 +58,10 @@ var ContactFormView = Backbone.View.extend({
     hideModal: function() {
         // Hide the modal
         this.$('.modal').modal('hide');
-    }
+    },
+    clearForm: function () {
+        this.$('#name').val('');
+        this.$('#email').val('');
+        this.$('#message').val('');
+    },
 });

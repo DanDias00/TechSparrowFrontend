@@ -42,7 +42,6 @@ var MyProfileView = Backbone.View.extend({
                         // Redirect to login page
                         Backbone.history.navigate('login', { trigger: true });
                     } else {
-                        console.error("Something went wrong. Please try again later.");
                         self.showModal('Error', 'An error occurred while fetching user data.', '#errorModal');
                         // Redirect to home page
                         Backbone.history.navigate('', { trigger: true });
@@ -51,7 +50,6 @@ var MyProfileView = Backbone.View.extend({
             });
         } else {
             // If session doesn't exist or user is not logged in, redirect to login page
-            console.error("User not logged in. Redirecting...");
             Backbone.history.navigate('login', { trigger: true });
         }
     },
@@ -71,7 +69,6 @@ var MyProfileView = Backbone.View.extend({
             url: 'http://localhost/TechSparrow/api/auth/logout',
             type: 'GET',
             success: function (response) {
-                console.log('Logout successful:', response);
 
                 // Clear the user data from local storage
                 localStorage.removeItem('session');
@@ -104,7 +101,6 @@ var MyProfileView = Backbone.View.extend({
     deleteAccount: function () {
         var self = this;
         var userId = JSON.parse(localStorage.getItem('session')).user_id;
-        console.log('Deleting account for user ID:', userId);
     
         // Set up the confirmation message
         var confirmationMessage = "Are you sure you want to delete your account?";
@@ -161,7 +157,6 @@ var MyProfileView = Backbone.View.extend({
         this.resetPasswordCall(newPassword, userId);
     },
     resetPasswordCall: function (newPassword, userId) {
-
         var self = this;
 
         $.ajax({
@@ -220,8 +215,11 @@ var MyProfileView = Backbone.View.extend({
                 self.renderUserQuestions(response);
             },
             error: function (xhr, status, error) {
-             
-                console.error('Error fetching user questions:', error);
+                if(status === 401 || status === 403) {
+                    self.showModal('Unauthorized Access', 'You are not authorized to view this page.', '#errorModal');
+                } else if (status === 500) {
+                    self.showModal('Error', 'An error occurred while fetching user questions.', '#errorModal');
+                }
             }
         });
     },
@@ -279,8 +277,6 @@ var MyProfileView = Backbone.View.extend({
                         },
                         success: function (response) {
                            
-                            console.log('Question updated successfully:', response);
-                            
                             // Update the UI with the new question data
                             $title.text(updatedTitle);
                             $body.text(updatedBody);
@@ -305,13 +301,11 @@ var MyProfileView = Backbone.View.extend({
             $deleteButton.on('click', function () {
                
                     var questionId = $(this).closest('.question').data('id');
-                    console.log('Deleting question:', questionId);
 
                     var confirmationMessage = "Are you sure you want to delete this question?";
                     var confirmationBody = "This action cannot be undone.";
                     $("#confirmModalBody").html("<p>" + confirmationMessage + "</p><p>" + confirmationBody + "</p>");
 
-                  
                     $('#confirmModal').modal('show');
                
                     $('#doNotDeleteButton').on('click', function() {
@@ -320,20 +314,15 @@ var MyProfileView = Backbone.View.extend({
                   
                     $('#confirmDeleteButton').on('click', function() {
             
-                
                     $.ajax({
                         url: 'http://localhost/TechSparrow/api/question/delete/' + questionId,
                         type: 'DELETE',
                         success: function (response) {
-                        
-                            console.log('Question deleted successfully:', response);
-                      
                             $questionContainer.remove();
                             $('#confirmModal').modal('hide');
                         },
                         error: function (xhr, status, error) {
-                          
-                            console.error('Error deleting question:', error);
+                            self.showModal('Error', 'Error deleting question', '#errorModal');
                         }
                     });
                 });

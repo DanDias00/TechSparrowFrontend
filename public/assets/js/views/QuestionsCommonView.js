@@ -118,7 +118,6 @@ var QuestionsCommonView = Backbone.View.extend({
 
     showErrorModal: function (errorMessage) {
         // Update modal body with error message
-        console.log("Error message: " + errorMessage);
         this.$('#errorModalBody').text(errorMessage);
         // Show the modal
         this.$('#errorModal').modal('show');

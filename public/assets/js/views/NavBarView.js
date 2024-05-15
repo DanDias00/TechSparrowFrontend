@@ -53,7 +53,6 @@ var NavbarView = Backbone.View.extend({
         }
     },
     render: function() {
-        console.log('NavbarView rendered');
         this.$el.empty().html(this.template({ loggedIn: this.session.get('loggedIn') }));
         return this;
     }

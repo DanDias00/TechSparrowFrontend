@@ -55,25 +55,19 @@ var ResetPasswordView = Backbone.View.extend({
             return;
         }
 
-        // Perform the API call to submit the new password
-        console.log('Submitting new password');
         this.resetPassword(newPassword, this.userId);
        
     },
     resetPassword: function(newPassword) {
-        // Perform the API call to submit the new password
-        console.log('Submitting new password for user ID: ', this.userId);
         var self = this;
-        //use ajax
         $.ajax({
             url: 'http://localhost/TechSparrow/api/auth/reset_password',
             type: 'POST',
-            data: { user_id: this.userId, // Include the user ID in the request
+            data: { user_id: this.userId,
             password: newPassword },
             success: function(response) {
             
                 self.clearForm();
-             
                 self.undelegateEvents();
                 Backbone.history.navigate('success', { trigger: true });
             }

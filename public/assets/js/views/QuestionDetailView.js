@@ -11,14 +11,12 @@ var QuestionDetailView = Backbone.View.extend({
     },
 
     initialize: function (options) {
-        console.log('QuestionDetailView initialized with options');
         this.model = new QuestionDetailModel({ id: options.id });
 
         this.loadTemplate(this.renderView);
         window.onpopstate = this.handleBackButtonEvent.bind(this);
     },
     handleBackButtonEvent: function (event) {
-        console.log('User navigated to:', window.location.pathname);
         this.undelegateEvents(); // Remove any existing event listeners
 
 
@@ -33,8 +31,6 @@ var QuestionDetailView = Backbone.View.extend({
             if (self.model.id) {
                 self.model.fetch({
                     success: function () {
-                        console.log('Question details fetched:', self.model.toJSON());
-                        console.log("model id", self.model.id);
                         callback.call(self); // Render the view after template is loaded and data is fetched
                     },
                     error: function (model, response, options) {
@@ -50,7 +46,6 @@ var QuestionDetailView = Backbone.View.extend({
         // Making sure the template is loaded before rendering
         if (this.template) {
             this.$el.empty();
-
             this.$el.html(this.template(this.model.toJSON()));
         }
         return this;
@@ -69,7 +64,6 @@ var QuestionDetailView = Backbone.View.extend({
         }
 
         $.post('http://localhost/TechSparrow/api/comment', data, function (response) {
-            console.log("Comment submitted successfully.");
             self.refreshQuestion();
 
         }).fail(function () {
@@ -91,7 +85,6 @@ var QuestionDetailView = Backbone.View.extend({
         }
 
         $.post('http://localhost/TechSparrow/api/answer', data, function (response) {
-            console.log("Answer submitted successfully.");
             self.refreshQuestion();
         }).fail(function () {
             self.showErrorModal("An error occurred while submitting your answer.");
@@ -104,7 +97,6 @@ var QuestionDetailView = Backbone.View.extend({
 
         this.model.fetch({
             success: function (model, response, options) {
-                console.log('Question and answers refreshed:', model.toJSON());
                 // Re-render the view to update list
                 this.renderView();
             }.bind(this),
@@ -117,13 +109,11 @@ var QuestionDetailView = Backbone.View.extend({
 
     upvoteAnswer: function (e) {
         e.preventDefault();
-        console.log("upvote");
         var answerId = $(e.currentTarget).data('answer-id');
         this.vote(answerId, 'upvote');
     },
     downvoteAnswer: function (e) {
         e.preventDefault();
-        console.log("downvote");
         var answerId = $(e.currentTarget).data('answer-id');
         this.vote(answerId, 'downvote');
     },
@@ -147,7 +137,6 @@ var QuestionDetailView = Backbone.View.extend({
                     self.showErrorModal("You have already voted on this answer.");
                 }
                 else if (xhr.status === 401) {
-                    alert("You must be logged in to vote.");
                     self.showErrorModal("You must be logged in to vote.");
                 }
                 else if (xhr.status === 500) {
@@ -159,7 +148,6 @@ var QuestionDetailView = Backbone.View.extend({
     },
     showErrorModal: function (errorMessage) {
         // Update modal body with error message
-        console.log("Error message: " + errorMessage);
         this.$('#errorModalBody').text(errorMessage);
         // Show the modal
         this.$('#errorModal').modal('show');

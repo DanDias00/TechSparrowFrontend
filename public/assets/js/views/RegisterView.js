@@ -95,7 +95,7 @@ var RegisterView = Backbone.View.extend({
         if (!username || !email || !password || !confirmPassword) {
            
             this.showModal('Error', 'All fields are required.', '#errorModal');
-            return false; // Stop further execution
+            return false; 
         }
 
         if (!this.isValidEmail(email)) {
@@ -107,7 +107,7 @@ var RegisterView = Backbone.View.extend({
         if (password !== confirmPassword) {
            
             this.showModal('Error', 'Passwords do not match.', '#errorModal');
-            return false; // Stop further execution
+            return false; 
         }
 
         // If all validations pass, set the user model and call register
@@ -128,16 +128,13 @@ var RegisterView = Backbone.View.extend({
     },
 
     register: function() {
-       
-        
        $.ajax({
         
             url: 'http://localhost/TechSparrow/api/auth/register', 
             type: 'POST',
             data: this.user.toJSON(),
             success: function(response) {
-               
-
+            
                 Backbone.history.navigate('login', { trigger: true });
                
             },
@@ -157,9 +154,7 @@ var RegisterView = Backbone.View.extend({
                 default:
                     errorMessage = 'An error occurred.';
             }
-               // Display error message to the user
-            console.error(errorMessage);
-        
+            this.showModal('Error', errorMessage, '#errorModal');
             }
             
         

@@ -129,3 +129,7 @@ body {
     height: 90vh;
 
 }
+
+#app{
+    min-height: 81vh;
+}

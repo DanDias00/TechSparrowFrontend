@@ -54,7 +54,6 @@ var AskQuestionView = Backbone.View.extend({
 
             data: questionData,
             success: function (response) {
-                console.log('Question successfully submitted');
                 self.clearForm();
                 self.undelegateEvents(); // Remove any existing event listeners
                 Backbone.history.navigate('questions', { trigger: true });
@@ -71,8 +70,6 @@ var AskQuestionView = Backbone.View.extend({
         this.$('#tags').val('');
     },
     showErrorModal: function (errorMessage) {
-        // Update modal body with error message
-        console.log("Error message: " + errorMessage);
         this.$('#errorModalBody').text(errorMessage);
         // Show the modal
         this.$('#errorModal').modal('show');
