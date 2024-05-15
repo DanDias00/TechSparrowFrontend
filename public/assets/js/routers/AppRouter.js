@@ -12,11 +12,17 @@ var AppRouter = Backbone.Router.extend({
         'email_success': 'showEmailSuccess', // #email_success
         'success': 'showSuccess', // #success
         'myProfile': 'myProfile',// #myProfile
-        'accountDelete': 'showAccountDeleteSuccess',
+        'accountDelete': 'showAccountDeleteSuccess', 
         'contact': 'showContact', // #accountDelete
         '*path': 'showNotFound' // Catch-all for 404 Not Found pages
 
 
+    },
+    initialize: function () {
+        this.rooEL = $('#app');   
+    },
+    removeBindedEvents: function () {
+        this.rooEL.off();
     },
 
     showLanding: function () {
@@ -33,13 +39,16 @@ var AppRouter = Backbone.Router.extend({
     },
 
     showQuestions: function () {
+        this.removeBindedEvents();
         if (localStorage.getItem('session')) {
             new QuestionsView({ collection: new QuestionsCollection() });
+
         } else {
             Backbone.history.navigate('login', { trigger: true });
         }
     },
     showQuestionDetail: function (id) {
+        this.removeBindedEvents();
         new QuestionDetailView({ id: id });
     },
     showAskQuestion: function () {
