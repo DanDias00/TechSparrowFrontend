@@ -17,6 +17,7 @@ var MyProfileView = Backbone.View.extend({
         document.title = "Tech Sparrow - My Profile";
 
         if (sessionData && sessionData.loggedIn) {
+          
             // If session exists and user is logged in, fetch user data from the server
             $.ajax({
                 url: 'http://localhost/TechSparrow/api/auth/profile',
@@ -29,12 +30,12 @@ var MyProfileView = Backbone.View.extend({
                     // Load user profile template
                     $.get('assets/html/user-profile-template.html', function (template) {
                         self.template = _.template(template);
-                        // Render the view
+                        self.fetchUserQuestions();
                         self.render();
                     });
                 },
                 error: function (xhr, status, error) {
-                    // Handle error if any
+                    
                     if (status === 401 || status === 403) {
                         self.showModal('Unauthorized Access', 'You are not authorized to view this page.', '#errorModal');
 
@@ -49,7 +50,7 @@ var MyProfileView = Backbone.View.extend({
                 }
             });
         } else {
-            // If session doesn't exist or user is not logged in, redirect to home page
+            // If session doesn't exist or user is not logged in, redirect to login page
             console.error("User not logged in. Redirecting...");
             Backbone.history.navigate('login', { trigger: true });
         }
@@ -75,7 +76,7 @@ var MyProfileView = Backbone.View.extend({
                 // Clear the user data from local storage
                 localStorage.removeItem('session');
 
-                // Redirect the user to the logout success page
+                // Redirect the user to the home page
                 Backbone.history.navigate('', { trigger: true });
 
             },
@@ -95,7 +96,6 @@ var MyProfileView = Backbone.View.extend({
                         errorMessage = 'An error occurred.';
                 }
                 // Display error message to the user
-
                 self.showModal('Error', errorMessage, '#errorModal');
             }
         });
@@ -105,35 +105,51 @@ var MyProfileView = Backbone.View.extend({
         var self = this;
         var userId = JSON.parse(localStorage.getItem('session')).user_id;
         console.log('Deleting account for user ID:', userId);
-        $.ajax({
-            url: 'http://localhost/TechSparrow/api/auth/delete_account/'+userId,
-            type: 'POST',
-            success: function (response) {
-                // Remove the session data from local storage
-                localStorage.removeItem('session');
-                // Redirect the user to the delete success page
-                Backbone.history.navigate('accountDelete', { trigger: true });
-                self.showModal('Success', 'Account deleted successfully.', '#successModal');
-                self.undelegateEvents();
-            },
-            error: function (xhr, status, error) {
-                // Handle error if any
-                self.showModal('Error', 'An error occurred while deleting your account.', '#errorModal');
-            }
+    
+        // Set up the confirmation message
+        var confirmationMessage = "Are you sure you want to delete your account?";
+        var confirmationBody = "This action cannot be undone.";
+        $("#confirmModalBody").html("<p>" + confirmationMessage + "</p><p>" + confirmationBody + "</p>");
+    
+        // Show the confirmation modal
+        $('#confirmModal').modal('show');
+
+        $('#doNotDeleteButton').on('click', function() {
+            $('#confirmModal').modal('hide');
+        });
+    
+        $('#confirmDeleteButton').on('click', function() {
+            $.ajax({
+                url: 'http://localhost/TechSparrow/api/auth/delete_account/' + userId,
+                type: 'POST',
+                success: function (response) {
+                    // Remove the session data from local storage
+                    localStorage.removeItem('session');
+                    // Redirect the user to the delete success page
+                    Backbone.history.navigate('accountDelete', { trigger: true });
+                    self.showModal('Success', 'Account deleted successfully.', '#successModal');
+                    self.undelegateEvents();
+                },
+                error: function (xhr, status, error) {
+                    self.showModal('Error', 'An error occurred while deleting your account.', '#errorModal');
+                }
+            });
+    
+            $('#confirmModal').modal('hide');
         });
     },
+    
 
     resetPassword: function (event) {
         event.preventDefault();
         var newPasswordInput = this.$('#resetPasswordinput');
 
         if (newPasswordInput.val().trim() === '') {
-            // Show an error message if the password field is empty
             this.showModal('Error', 'Password cannot be empty.', '#errorModal');
             return;
         }
         var newPassword = newPasswordInput.val().trim(); // Trim whitespace from the password
-        // Check if the password contains only alphanumeric characters and allowed special characters
+
         var passwordRegex = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
         if (!passwordRegex.test(newPassword)) {
             self.showModal('Error', 'Password contains disallowed characters. Please use only alphanumeric characters and allowed special characters.', '#errorModal');
@@ -146,7 +162,6 @@ var MyProfileView = Backbone.View.extend({
     },
     resetPasswordCall: function (newPassword, userId) {
 
-        console.log('Submitting new password for user ID: ', userId);
         var self = this;
 
         $.ajax({
@@ -193,5 +208,143 @@ var MyProfileView = Backbone.View.extend({
     hideModal: function () {
         // Hide the modal
         this.$('.modal').modal('hide');
-    }
-});
+    },
+    fetchUserQuestions: function () {
+        var self = this;
+        var userId = JSON.parse(localStorage.getItem('session')).user_id;
+
+        $.ajax({
+            url: 'http://localhost/TechSparrow/api/questions/user/' + userId,
+            type: 'GET',
+            success: function (response) {
+                self.renderUserQuestions(response);
+            },
+            error: function (xhr, status, error) {
+             
+                console.error('Error fetching user questions:', error);
+            }
+        });
+    },
+    renderUserQuestions: function (questions) {
+        var self = this;
+        var $userQuestionsContainer = this.$('#userQuestions');
+    
+        // Clear existing questions in the container
+        $userQuestionsContainer.empty();
+    
+        // Iterate over each question and append it to the container
+        questions.forEach(function (question) {
+            var $questionContainer = $('<div class="question">');
+            var $title = $('<h3>').text(question.title);
+            var $body = $('<p>').text(question.body);
+            var $editButton = $('<button class="btn btn-primary edit-question">Edit</button>');
+            var $deleteButton = $('<button class="btn btn-danger delete-question">Delete</button>');
+
+            $questionContainer.attr('data-id', question.id);
+    
+            // Attach event listeners for edit and delete actions
+            $editButton.on('click', function () {
+                // Find the question container
+                var $questionContainer = $(this).closest('.question');
+            
+                // Find the title and body elements
+                var $title = $questionContainer.find('h3');
+                var $body = $questionContainer.find('p');
+            
+                // Replace title and body with input fields
+                var $titleInput = $('<input>').val($title.text());
+                var $bodyInput = $('<textarea>').val($body.text());
+            
+                $title.replaceWith($titleInput);
+                $body.replaceWith($bodyInput);
+            
+                // Create a save button
+                var $saveButton = $('<button class="btn btn-success save-question">Save</button>');
+            
+                // Replace edit button with save button
+                $(this).replaceWith($saveButton);
+            
+                // Attach click event to the save button
+                $saveButton.on('click', function () {
+                    // Get the updated title and body values
+                    var updatedTitle = $titleInput.val();
+                    var updatedBody = $bodyInput.val();
+
+                    $.ajax({
+                        url: 'http://localhost/TechSparrow/api/question/update/' + question.id,
+                        type: 'PUT',
+                        data: {
+                            title: updatedTitle,
+                            body: updatedBody
+                        },
+                        success: function (response) {
+                           
+                            console.log('Question updated successfully:', response);
+                            
+                            // Update the UI with the new question data
+                            $title.text(updatedTitle);
+                            $body.text(updatedBody);
+                            
+                            // Replace input elements with h3 and p elements
+                            $title.replaceWith($('<h3>').text(updatedTitle));
+                            $body.replaceWith($('<p>').text(updatedBody));
+                            self.fetchUserQuestions();
+                            
+                            // Replace save button with edit button
+                            $saveButton.replaceWith($editButton);
+                        }
+                        ,
+                        error: function (xhr, status, error) {
+                            self.showModal('Error','Error updating question' , '#errorModal');
+                        }
+                    });
+                });
+            });
+            
+    
+            $deleteButton.on('click', function () {
+               
+                    var questionId = $(this).closest('.question').data('id');
+                    console.log('Deleting question:', questionId);
+
+                    var confirmationMessage = "Are you sure you want to delete this question?";
+                    var confirmationBody = "This action cannot be undone.";
+                    $("#confirmModalBody").html("<p>" + confirmationMessage + "</p><p>" + confirmationBody + "</p>");
+
+                  
+                    $('#confirmModal').modal('show');
+               
+                    $('#doNotDeleteButton').on('click', function() {
+                        $('#confirmModal').modal('hide');
+                    });
+                  
+                    $('#confirmDeleteButton').on('click', function() {
+            
+                
+                    $.ajax({
+                        url: 'http://localhost/TechSparrow/api/question/delete/' + questionId,
+                        type: 'DELETE',
+                        success: function (response) {
+                        
+                            console.log('Question deleted successfully:', response);
+                      
+                            $questionContainer.remove();
+                            $('#confirmModal').modal('hide');
+                        },
+                        error: function (xhr, status, error) {
+                          
+                            console.error('Error deleting question:', error);
+                        }
+                    });
+                });
+            
+            });
+            
+            // Append elements to question container
+            $questionContainer.append($title, $body, $editButton, $deleteButton);
+            $userQuestionsContainer.append($questionContainer);
+        });
+    },
+    
+}
+);
