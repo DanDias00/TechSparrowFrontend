@@ -10,9 +10,7 @@ var AskQuestionView = Backbone.View.extend({
 
     initialize: function () {
         var self = this;
-        // Fetch the template content from the HTML file
         $.get('assets/html/ask-question-template.html', function (templateHtml) {
-            // Once fetched, set the template function
             self.template = _.template(templateHtml);
             // Render the view
             self.render();
@@ -21,7 +19,6 @@ var AskQuestionView = Backbone.View.extend({
     },
 
     render: function () {
-        // Use the compiled template to render the form
         this.$el.html(this.template());
         return this;
     },
@@ -51,7 +48,6 @@ var AskQuestionView = Backbone.View.extend({
 
         var self = this;
 
-        // API call to send the data to the backend using AJAX
         $.ajax({
             type: 'POST',
             url: 'http://localhost/TechSparrow/api/question',
