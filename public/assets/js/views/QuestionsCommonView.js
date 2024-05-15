@@ -12,6 +12,12 @@ var QuestionsCommonView = Backbone.View.extend({
         this.collection = new QuestionsCollection();
         this.listenTo(this.collection, 'reset', this.renderQuestionsView);
         this.listenTo(this.collection, 'noResultsFound', this.renderNoResultsMessage);
+        this.rootEl = $('#app'); // Store the root element for the view
+        this.$('#all-questions-btn').hide(); // Hide the clear button
+    },
+
+    removeBindedEvents: function () {
+        this.rootEl.off(); // Remove all event listeners bound to the root element
     },
 
     render: function () {
@@ -30,13 +36,17 @@ var QuestionsCommonView = Backbone.View.extend({
                         <div class="modal-body" id="errorModalBody">
                             <!-- Error message will be rendered here -->
                         </div>
+                        <div class="modal-footer">
+                        <button id="all-questions-btn" class="close btn btn-warning" data-dismiss="modal" aria-label="Close">Clear Filter</button>
+                        </div>
                     </div>
                 </div>
             </div>
                 <div class="container mt-4">
                     <div class="row align-items-center">
                             <div class="question-header col-6 d-flex justify-content-center">
-                                <button id="all-questions-btn" class="btn btn-warning">All Questions</button>
+                            <button id="all-questions-btn" class="btn btn-warning" ">All Questions</button>
+
                         </div>
                         <div class="ask-header col-6 d-flex justify-content-center">
                             <!-- Search form - updated to have class for event binding -->
@@ -60,54 +70,47 @@ var QuestionsCommonView = Backbone.View.extend({
         if (query) {
             this.searchQuestions(query);
             this.$('.search-input').val(''); // Clear the search input
+
         }
     },
 
     fetchAllQuestions: function () {
         var self = this;
-        // Fetch the collection again from the server to retrieve all questions
-
         this.collection.fetch({
             reset: true,
             success: function (collection, response) {
-                // Render the view with the fetched collection
                 self.renderQuestionsView();
-                self.undelegateEvents(); // Remove any existing event listeners
-
             },
             error: function (collection, response) {
-                // Notify user of an error
                 self.showErrorModal("An error occurred while fetching questions.");
-
             }
         });
     },
 
     searchQuestions: function (query) {
         var self = this;
-        this.collection.search(query) // Search the collection with the query
+        this.collection.search(query);
     },
 
 
     renderQuestionsView: function () {
-        // Check if the QuestionsView instance already exists
-        if (this.questionsView) {
-            // Update the collection of the existing QuestionsView instance
-            this.questionsView.collection = this.collection;
-            // Trigger a re-render of the QuestionsView
-            this.questionsView.render();
-        } else {
-            // Create and render the new QuestionsView instance with the updated collection
-            this.questionsView = new QuestionsView({ collection: this.collection });
-            // Append the view to the container element
-            this.$el.append(this.questionsView.render().el);
-        }
-
-        this.undelegateEvents(); // Remove any existing event listeners
+        // Clear the previous view content
+        this.removeBindedEvents();
+        this.$el.empty();
+        this.QuestionsCommonView = new QuestionsCommonView();
+        this.render();
+        // Render each question
+        this.collection.each(function (question) {
+            var questionEl = $('<div class="question-content"></div>').appendTo(this.$el);
+            var questionView = new QuestionView({ model: question, el: questionEl });
+            questionView.render();
+        }, this);
     },
+
 
     renderNoResultsMessage: function () {
         errorMessage = 'No results found. Please try another search query.';
+        this.collection.reset(); // Reset the collection
         this.showErrorModal(errorMessage);
 
 
