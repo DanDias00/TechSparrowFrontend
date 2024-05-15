@@ -2,6 +2,7 @@ var QuestionsView = Backbone.View.extend({
     el: '#app', 
 
     initialize: function(options) {
+        
         document.title = "Tech Sparrow - Questions";
         this.navbarView = options.navbarView|| new NavbarView();
         this.collection = options.collection || new QuestionsCollection();

@@ -32,12 +32,12 @@ var AskQuestionView = Backbone.View.extend({
         // Retrieve values from the form
         var title = this.$('#title').val();
         var body = this.$('#body').val();
+
         // Convert tags array to a comma-separated string
         var tags = this.$('#tags').val().split(',').map(function (tag) { return tag.trim(); }).join(',');
 
         // Check if any of the fields are empty
         if (title.trim() === '' || body.trim() === '' || tags.trim() === '') {
-            // Show an error message or perform some other action to indicate that fields are empty
             this.showErrorModal('One or more fields are empty');
             return;
         }

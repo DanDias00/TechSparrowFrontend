@@ -21,12 +21,10 @@ var LandingView = Backbone.View.extend({
     },
 
     onLoginClick: function () {
-        // Navigate to the login route
         Backbone.history.navigate('login', { trigger: true });
     },
 
     onRegisterClick: function () {
-        // Navigate to the register route
         Backbone.history.navigate('register', { trigger: true });
     }
 });

@@ -1,6 +1,6 @@
 var QuestionDetailView = Backbone.View.extend({
     el: '#app',
-    template: null, // This will be set after the template is loaded
+    template: null,
 
     events: {
         "click .submit-comment": "submitComment",

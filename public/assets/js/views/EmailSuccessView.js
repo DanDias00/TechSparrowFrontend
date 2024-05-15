@@ -29,7 +29,6 @@ var EmailSuccessView = Backbone.View.extend({
     },
 
     navigateHome: function() {
-        // Navigate to the home page or route
         Backbone.history.navigate('', { trigger: true });
     }
 });

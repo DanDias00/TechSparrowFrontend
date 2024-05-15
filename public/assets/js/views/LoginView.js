@@ -106,8 +106,6 @@ var LoginView = Backbone.View.extend({
                     default:
                         errorMessage = 'An error occurred.';
                 }
-
-                // Display error message in Bootstrap modal
                 self.showErrorModal(errorMessage);
             }
         });
